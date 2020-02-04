@@ -1,0 +1,29 @@
+<div class="container-fluid header-container"> 
+    <div class="row">
+        <div class="col-md-9 col-sm-9 col-xs-9">
+            <div class="padding-left">
+                <a [routerLink]="['/']"><span><img class="img2" src="../../../assets/goi/uttarpradeshlogo.png"></span></a>
+            </div>
+            <div class="padding-left">
+                <span class="shor">
+                    <h1>S.H.O.R</h1>
+                    ({{'COMMON.SEXUAL_HARASSMENT_ONLINE_REDRESSAL' | translate}})
+                </span>
+            </div>
+
+        </div>
+        <div class="col-md-3 col-md-3 col-md-3">
+            <div class="sec">
+                <h5 class="lang txt-rt">{{'COMMON.WEBSITE_LANGUAGE' | translate}}</h5>
+                <h5 class="lang">
+                    <a href="javascript:void(0);" class="eng" [ngClass]="{'selected':language=='en'}" (click)="onEnglish()">English</a>
+                    <a href="javascript:void(0);" class="hind" [ngClass]="{ 'selected': language == 'hn'}"(click)="onHindi()">हिन्दी</a>
+                </h5>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+    </div>
+</div>

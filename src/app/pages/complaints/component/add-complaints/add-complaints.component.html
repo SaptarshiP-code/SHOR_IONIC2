@@ -1,0 +1,751 @@
+<form class="form" [formGroup]="addComplaintForm">
+  <div class="row " *ngIf="stepNumber == 1">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-4 text-left  ">
+        <span class="step">{{'COMPLAINANT.STEP_1_4' | translate}} </span>
+        <span class="step-desc">{{'COMPLAINANT.COMPL_DETAILS' | translate}}</span>
+      </div>
+      <div class="col-sm-4 m-auto">
+        {{'COMPLAINANT.FILE_COMPL' | translate}}
+      </div>
+      <div class="col-sm-4 m-auto">
+        &nbsp;
+      </div>
+    </div>
+  </div>
+  <div class="row " *ngIf="stepNumber == 2">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-4 text-left  ">
+        <span class="step">{{'COMPLAINANT.STEP_2_4' | translate}} </span>
+        <span class="step-desc">{{'COMPLAINANT.WORKPLACE_DET' | translate}}</span>
+      </div>
+      <div class="col-sm-4 m-auto">
+        {{'COMPLAINANT.FILE_COMPL' | translate}}
+      </div>
+      <div class="col-sm-4 m-auto">
+        &nbsp;
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="stepNumber ==3">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-4  text-left ">
+        <span class="step">{{'COMPLAINANT.STEP_3_4' | translate}} </span>
+        <span class="step-desc">{{'COMPLAINANT.COMPLAIN_DETAILS' | translate}}</span>
+      </div>
+      <div class="col-sm-4 m-auto">
+        {{'COMPLAINANT.FILE_COMPL' | translate}}
+      </div>
+      <div class="col-sm-4 m-auto">
+        &nbsp;
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="stepNumber ==4">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-4 text-left  ">
+        <span class="step">{{'COMPLAINANT.STEP_4_4' | translate}}</span>
+        <span class="step-desc">&nbsp; &nbsp;{{'COMPLAINANT.RESPONDENT_DETAIL' | translate}}</span>
+      </div>
+      <div class="col-sm-4 m-auto">
+        {{'COMPLAINANT.FILE_COMPL' | translate}}
+      </div>
+      <div class="col-sm-4 m-auto">
+        &nbsp;
+      </div>
+    </div>
+  </div>
+
+  <alert></alert>
+  <!-- <div class="col-sm-6 col-md-1 col-lg-1  mandatory text-right">
+      * Mandatory
+    </div> -->
+  <div class="row " *ngIf="stepNumber == 1">
+      <div class="col-sm-2 col-md-2 col-lg-2"></div>
+    <div class="col-sm-8 col-md-8 col-lg-8 m-auto form">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="name">{{'COMPLAINANT.NAME' | translate}}</label>
+            <input type="text" readonly formControlName="name" class="form-control text-box" id="name" placeholder="" />
+
+          </div>
+          <div class="form-group">
+            <label for="mobileNumber">{{'COMPLAINANT.MOBILE_NUMBER' | translate}}*</label>
+            <input type="tel" readonly formControlName="mobileNumber" class="form-control text-box" id="mobileNumber"
+              placeholder="{{
+                'REGISTRATION.MOBILE_NUMBER_PLACEHOLDER' | translate
+              }}" />
+          </div>
+          <div class="form-group ">
+            <label>{{'COMPLAINANT.UPLOAD_ID' | translate}} *</label>
+            <!-- <input type="file" formControlName="governmentId" /> -->
+            <!-- <angular-file-uploader formControlName="governmentId" [config]="afuConfig"></angular-file-uploader> -->
+            <input type="file" #governmentId class="file-input d-none" id="governmentId"
+              (change)="onFileChange($event,'governmentId')" #governmentId>
+            <div class="row">
+              <img class="attachimg" src="./../../../../../assets/images/Attachment.png"
+                (click)="governmentId.click()" />
+              &nbsp;&nbsp;{{addComplaintForm.value.governmentId.name}}
+            </div>
+            <!-- <button (click) = "removeFile('governmentId')" name="Remove" *ngIf= "addComplaintForm.value.governmentId.name" >X</button> -->
+            <div *ngIf="f.governmentId.errors && f.governmentId.errors.size" class="alert alert-danger">
+              {{'COMPLAINANT.SIZE_ERROR' | translate}}
+            </div>
+            <div *ngIf="f.governmentId.errors && f.governmentId.errors.type" class="alert alert-danger">
+              {{'COMPLAINANT.TYPE_ERROR' | translate}}
+            </div>
+            <div *ngIf="stepNumberSubmitted > 0 && f.governmentId.errors && f.governmentId.errors.required"
+              class="alert alert-danger">
+              {{'COMPLAINANT.UPLOAD_ID' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+            </div>
+          </div>
+          <div class="form-group ">
+            <label>{{'COMPLAINANT.UPLOAD_COMPLAINT' | translate}} *</label>
+            <input type="file" #writtenComplaint id="writtenComplaint" class="d-none"
+              (change)="onFileChange($event,'writtenComplaint')" #writtenComplaint>
+            <div class="row">
+              <img class="attachimg" src="./../../../../../assets/images/Attachment.png"
+                (click)="writtenComplaint.click()" />
+              &nbsp;&nbsp;{{addComplaintForm.value.writtenComplaint.name}}
+            </div>
+            <!-- <button (click) = "removeFile('governmentId')" name="Remove" *ngIf= "addComplaintForm.value.governmentId.name" >X</button> -->
+            <div *ngIf="f.writtenComplaint.errors && f.writtenComplaint.errors.size" class="alert alert-danger">
+              {{'COMPLAINANT.SIZE_ERROR' | translate}}
+            </div>
+            <div *ngIf="f.writtenComplaint.errors && f.writtenComplaint.errors.type" class="alert alert-danger">
+              {{'COMPLAINANT.TYPE_ERROR' | translate}}
+            </div>
+            <div *ngIf="stepNumberSubmitted > 0 && f.writtenComplaint.errors && f.writtenComplaint.errors.required"
+              class="alert alert-danger">
+              {{'COMPLAINANT.UPLOAD_COMPLAINT' | translate}}
+              {{'ERROR_MSG.IS_REQUIRED' | translate}}
+            </div>
+            <!-- <input type="file" formControlName="writtenComplaint" /> -->
+            <!-- <angular-file-uploader formControlName="writtenComplaint" [config]="afuConfig"></angular-file-uploader> -->
+          </div>
+          <div class="form-group comp">
+            <label>
+              {{'COMPLAINANT.COMPLAINT_SELF_BEHALF' | translate}} *
+            </label>
+          </div>
+          <div class="form-group form-group-radio">
+            <input type="radio" class="form-control-radio" formControlName="self" [value]=true checked
+              (click)="ComplainantType('self')" />
+            {{'COMPLAINANT.COMPLAINT_SELF' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" class="form-control-radio" formControlName="self" [value]=false
+              (click)="ComplainantType('other')" />
+            {{'COMPLAINANT.COMPLAINT_BEHALF' | translate}}
+            <div *ngIf="stepNumberSubmitted > 0 && f.self.errors" class="alert alert-danger">
+              <div *ngIf="f.self.errors.required">{{'COMPLAINANT.COMPLAINT_SELF_BEHALF' | translate}}
+                {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6  col-lg-6 part2">
+          <div class="form-group ">
+            <label for="emailId">{{'COMPLAINANT.EMAIL' | translate}}</label>
+            <input type="text" readonly formControlName="emailId" class="form-control text-box" id="emailId"
+              placeholder="" />
+            <!-- <div *ngIf="stepNumberSubmitted > 0 && f.emailId.errors" class="alert alert-danger">
+              <div *ngIf="f.emailId.errors.required">
+                {{'COMPLAINANT.EMAIL' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-12  col-lg-12 onbehalf  " *ngIf="other == true">
+          <div class="col-md-6 col-lg-6 part2">
+            <div class="form-group" [formGroup]="addComplaintForm.get('complainant')">
+              <label for="name">{{'COMPLAINANT.COMPLAINANT_NAME' | translate}} *</label>
+              <input type="text" formControlName="name" class="form-control text-box" id="name" placeholder="" />
+              <div *ngIf="stepNumberSubmitted > 0 && f.complainant.controls.name.errors" class="alert alert-danger">
+                <div *ngIf="f.complainant.controls.name.errors.required">
+                  {{'COMPLAINANT.COMPLAINANT_NAME' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="relationship">{{'COMPLAINANT.RELATIONSHIP' | translate}} *</label>
+              <!-- <input type="text" formControlName="relationship" class="form-control text-box" id="relationship"
+                placeholder="Enter Relationship" [ngClass]="{
+                  'is-invalid': stepOneSumbitted && addComplaintFormError.emailId
+                }" /> -->
+
+              <select class="form-control input-lg" formControlName="relationship" id="relationship">
+                <option value="">{{'COMPLAINANT.SELECT_RELATIONSHIP' | translate}}</option>
+                <option *ngFor="let relationship of relationsships" value={{relationship.key}}>
+                  {{relationship.name | translate}}
+                </option>
+              </select>
+
+              <div *ngIf="stepNumberSubmitted > 0 && f.relationship.errors" class="alert alert-danger">
+                <div *ngIf="f.relationship.errors.required">
+                  {{'COMPLAINANT.RELATIONSHIP' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group ">
+
+
+              <label>{{'COMPLAINANT.COMPLAINANT_GOVT_ID' | translate}} *</label>
+              <!-- <angular-file-uploader [config]="afuConfig"></angular-file-uploader> -->
+              <input type="file" #complainantId id="complainantId" class="d-none"
+                (change)="onFileChange($event,'complainantId')">
+              <div class="row">
+                <img class="attachimg" src="./../../../../../assets/images/Attachment.png"
+                  (click)="complainantId.click()" />
+                &nbsp;&nbsp;{{addComplaintForm.value.complainantId.name}}
+              </div>
+              <!-- <button (click) = "removeFile('governmentId')" name="Remove" *ngIf= "addComplaintForm.value.governmentId.name" >X</button> -->
+              <div *ngIf="f.complainantId.errors && f.complainantId.errors.size" class="alert alert-danger">
+                {{'COMPLAINANT.SIZE_ERROR' | translate}}
+              </div>
+              <div *ngIf="f.complainantId.errors && f.complainantId.errors.type" class="alert alert-danger">
+                {{'COMPLAINANT.TYPE_ERROR' | translate}}
+              </div>
+              <div *ngIf="stepNumberSubmitted > 0 && f.complainantId.errors && f.complainantId.errors.required"
+                class="alert alert-danger">
+                {{'COMPLAINANT.COMPLAINANT_GOVT_ID' | translate}}
+                {{'ERROR_MSG.IS_REQUIRED' | translate}}
+              </div>
+            </div>
+            <div class="form-group ">
+              <label>{{'COMPLAINANT.UPLOAD_CONSENT' | translate}} *</label>
+              <!-- <angular-file-uploader [config]="afuConfig"></angular-file-uploader> -->
+              <input type="file" #consent class="d-none" id="consent" (change)="onFileChange($event,'consent')">
+
+              <div class="row">
+                <img class="attachimg" src="./../../../../../assets/images/Attachment.png" (click)="consent.click()" />
+                &nbsp;&nbsp;{{addComplaintForm.value.consent.name}}
+              </div>
+              <!-- <button (click) = "removeFile('governmentId')" name="Remove" *ngIf= "addComplaintForm.value.governmentId.name" >X</button> -->
+              <div *ngIf="f.consent.errors && f.consent.errors.size" class="alert alert-danger">
+                {{'COMPLAINANT.SIZE_ERROR' | translate}}
+              </div>
+              <div *ngIf="f.consent.errors && f.consent.errors.type" class="alert alert-danger">
+                {{'COMPLAINANT.TYPE_ERROR' | translate}}
+              </div>
+
+              <div *ngIf="stepNumberSubmitted > 0 && f.consent.errors && f.consent.errors.required"
+                class="alert alert-danger">
+                {{'COMPLAINANT.UPLOAD_CONSENT' | translate}}
+                {{'ERROR_MSG.IS_REQUIRED' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part2">
+            <div class="form-group">
+              <label for="reason">{{'COMPLAINANT.REASON' | translate}} *</label>
+              <!-- <input type="text" formControlName="reason" class="form-control text-box" id="reason"
+                placeholder="Enter Reason" [ngClass]="{
+                  'is-invalid': stepOneSumbitted && addComplaintFormError.emailId
+                }" /> -->
+              <select formControlName="reason" (change)="onSelectReason($event.target.value,$event.target.option)"
+                class="form-control input-lg" id="reason">
+                <option value=""> {{'COMPLAINANT.PLEASE_SELECT_REASON' | translate}}</option>
+                <option *ngFor="let reason of getReasons()" value={{reason.key}}>{{reason.name | translate}}</option>
+              </select>
+
+              <div *ngIf="stepNumberSubmitted > 0 && f.reason.errors" class="alert alert-danger">
+                <div *ngIf="f.reason.errors.required">{{'COMPLAINANT.REASON' | translate}}
+                  {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group submit">
+          <div>
+            <button type="button" class="btn" (click)="validateStep(1)">{{'BUTTON.NEXT' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2  mandatory text-right">
+        * {{'COMMON.MANDATORY' | translate}} 
+    </div>
+  </div>
+
+
+  <div class="row " *ngIf="stepNumber == 2">
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <div class="helpText" *ngIf="showHelpText" >
+        <div class="closebtn">
+          <a href="javascript:void()" class="btn-text" (click)="onCloseToggle()">X</a></div>
+        <div class="helpTitle">
+         {{'COMMON.NEED_HELP' | translate}}
+        </div>
+        <div class="helpBody">
+          <ul>
+            <li>
+              <b>Government:</b>Includes Central Government, State Government, PSUs and Local Bodies 
+            </li>
+            <li>
+              <b>Private:</b> Any non-government workplace which is run by a person, partnership or corporation
+            </li>
+            <li>
+             <b> Dwelling Place or House:</b> Any house, flat, or other place of residence which is not an organization and is not governed by any government or private body
+            </li>
+            <!-- <li>
+              <b>Less than 10 Employees:</b> Any Workplace which consists of less than 10 employees
+            </li> -->
+            <li>
+              <b>Other:</b> Any workplace which is not covered in the above listed categories
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-sm-8 col-md-8 col-lg-8 form">
+      <div class="row">
+        <div class="col-md-4 col-lg-4 part1">
+          <div class="form-group ">
+            <label> {{'COMPLAINANT.WORKPLACE_CATEGORY' | translate}} *</label> &nbsp;
+            <!-- <img src="./../../../../../assets/icons/InfoIcon.svg" tooltipClass="password-tooltip" placement="bottom"
+              triggers="click:blur" ngbTooltip="{{tooltipText}}"> -->
+              &nbsp;<a href="javascript:void()" class="btn-text"
+              (click)="getHelpToggle()">{{'COMMON.NEED_HELP_TEXT' | translate}}</a>
+            <select class="form-control text-box" id="workPlaceCategory" formControlName="orgCategory"
+              (change)="orgCategory($event.target.value)">
+              <option value="">{{'DETAIL_COMPLAINANT.SELECT_ONE' | translate}}</option>
+              <option *ngFor="
+                  let workPlaceCategory1 of workPlaceCategory;
+                  let i = index
+                " [value]="workPlaceCategory[i].id">
+                {{ workPlaceCategory[i].name | translate}}
+              </option>
+            </select>
+            <div *ngIf="stepNumberSubmitted > 1 && f.orgCategory.errors" class="alert alert-danger">
+              <div *ngIf="f.orgCategory.errors.required">
+                {{'COMPLAINANT.WORKPLACE_CATEGORY' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4 part1" *ngIf="tableList">
+          <div class="form-group">
+            <label class="search-label">{{'COMPLAINANT.SEARCH_YOUR_ORGANISATION' | translate}} *</label>
+            <input class="form-control text-box orgsearch" type="text" formControlName="pattern" value=""
+              (change)="getOrganization()" />
+            <img class="search-icon" (click)="getOrganization()" src="./../../../../../assets/images/Search@2.png">
+           
+            <div *ngIf="stepNumberSubmitted > 1 && f.pattern.errors" class="alert alert-danger">
+              <div *ngIf="f.pattern.errors.required">
+                {{'COMPLAINANT.SEARCH_YOUR_ORGANISATION' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 m-auto search" *ngIf="tableList">
+          <!-- <input type="button" class="btn-text" (click)="getOrganization()"
+            value="Filter" /> -->
+          <!-- <a href="javascript:void()" class="btn-text"
+            (click)="getOrganization()">{{'COMPLAINANT.SEARCH' | translate}}</a> -->
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!tableList">
+
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group" *ngIf="miscellaneous == true">
+            <label>{{'COMPLAINANT.ORGANISATION' | translate}} </label>
+            <input type="text" formControlName="orgName" class="form-control text-box">
+
+          </div>
+          <div class="form-group">
+            <label>{{'COMPLAINANT.ADDRESS' | translate}} *</label>
+            <textarea rows="6" formControlName="orgAddress" class="form-control text-box"></textarea>
+            <div *ngIf="stepNumberSubmitted > 1 && f.orgAddress.errors" class="alert alert-danger">
+              <div *ngIf="f.orgAddress.errors.required">
+                {{'COMPLAINANT.ADDRESS' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group" *ngIf="miscellaneous == true">
+                <label>{{'COMPLAINANT.ORGANISATION_CONTACT' | translate}} </label>
+                <input type="text" formControlName="orgMobileNumber" class="form-control text-box">
+    
+              </div>
+          <div class="form-group">
+            <label>{{'COMPLAINANT.PINCODE' | translate}} *</label>
+            <!-- <input type="text" formControlName="orgPinCode" class="form-control text-box" /> -->
+            <select class="form-control text-box" formControlName="orgPinCode">
+              <option value="">{{'COMPLAINANT.SELECT_PINCODE' | translate}}</option>
+              <option *ngFor="let pincode of pinCode" [ngValue]="pincode">{{pincode}}</option>
+            </select>
+            <div *ngIf="stepNumberSubmitted > 1 && f.orgPinCode.errors" class="alert alert-danger">
+              <div *ngIf="f.orgPinCode.errors.required">
+                {{'COMPLAINANT.PINCODE' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-12 col-lg-12">
+        <div *ngIf="organization && tableList">
+          <div *ngIf="stepNumberSubmitted > 1 && f.orgunit.errors" class="alert alert-danger">
+            <div *ngIf="f.orgunit.errors.required">
+              {{'COMPLAINANT.ORGANIZATION_REQUIRED' | translate}}
+            </div>
+          </div>
+
+          <div *ngIf="organizationData?.length> 0 && showOrgTable == true">
+            <table class="table table-striped" [mfData]="organizationData" #mf="mfDataTable" [mfRowsOnPage]="5">
+              <thead>
+                <tr>
+                  <th style="width: 25%">
+                    <mfDefaultSorter by="name">{{'COMPLAINANT.ORGANISATION' | translate}}</mfDefaultSorter>
+                  </th>
+                  <th style="width: 65%">
+                    <mfDefaultSorter by="emailId">{{'COMPLAINANT.ADDRESS' | translate}}</mfDefaultSorter>
+                  </th>
+                  <!-- <th>No of Employee</th> -->
+                  <th>{{'COMPLAINANT.SELECT' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let organizations of mf.data">
+                  <td>{{ organizations.orgName }}
+
+                  </td>
+                  <td>{{ organizations.orgAddress }}</td>
+                  <!-- <td>{{ organizations.totalEmp }}</td> -->
+                  <td>
+                    <input type="radio" formControlName="orgunit" name="orgunit" [value]="organizations._id"
+                      (click)="getUnits(organizations)" />
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div *ngIf="organizationData?.length== 0 && showOrgTable == true"> {{'COMPLAINANT.NO_RECORD_FOUND' | translate}} </div>
+        </div>
+
+        <input type="hidden" value="{{selectedOrgCode}}" formControlName="regNumber" readonly />
+        <div *ngIf="unit && tableList">
+          <div *ngIf="stepNumberSubmitted > 1 && f.unitDetail.errors" class="alert alert-danger">
+            <div *ngIf="f.unitDetail.errors.required">
+              {{'COMPLAINANT.UNIT_REQUIRED' | translate}}
+            </div>
+          </div>
+          <table class="table table-striped" [mfData]="unitData" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead>
+              <tr>
+                <th style="width: 20%">
+                  <mfDefaultSorter by="name">{{'COMPLAINANT.UNIT_CODE' | translate}}</mfDefaultSorter>
+                </th>
+                <th style="width: 20%">
+                  <mfDefaultSorter by="emailId">{{'COMPLAINANT.NAME' | translate}}</mfDefaultSorter>
+                </th>
+                <th style="width: 50%">{{'COMPLAINANT.ADDRESS' | translate}}</th>
+                <!-- <th style="width: 20%">{{'COMPLAINANT.PINCODE' | translate}}</th> -->
+                <th style="width: 10%">{{'COMPLAINANT.SELECT' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let unit of mf.data">
+                <td>{{ unit.code }}</td>
+                <td>{{ unit.name }}</td>
+                <td>{{ unit.address }}</td>
+                <!-- <td>{{ unit.pinCode }}</td> -->
+                <td>
+                  <input type="radio" formControlName="unitDetail" [value]="unit.code" name="unitDetail"
+                    (click)="getUnitDetails(unit)" />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div>
+          <input type="hidden" formControlName="unitCode" readonly />
+          <div *ngIf="unitDetails" class="icc-data">
+
+            <div class="text-center org-name"> {{selectedorgData.org.name}}
+
+              <!-- <input type="text" value="{{selectedorgData.org.code}}" formControlName="organisationCode" readonly /> -->
+            </div>
+            <div class="row iccrow">
+              <div class="col-md-6">
+                <div class="text"> {{iccDetails.name | titlecase}}
+
+                </div>
+                <div class="head"> {{iccDetails.address}}<br>
+                  {{iccDetails.pinCode}} </div>
+
+              </div>
+              <div class="col-md-6">
+                <span class="head"> ICC Status: </span>
+                <span class="text">
+                  <span *ngIf="iccDetails.iccStatus;else icc_no">Present</span>
+                  <ng-template #icc_no>
+                    Not Present
+                  </ng-template>
+                </span> <br />
+                <span class="head"> ICC Chairperson:</span>
+                <span class="text"> {{iccDetails.iccChairperson | titlecase}}</span>
+              </div>
+              <div class="col-md-12"><span class="head">Unit Head: </span>
+                <span class="text"> {{iccDetails.head.name | titlecase}}
+                </span>
+              </div>
+            </div>
+
+
+            <!-- {{iccDetails.head.emailIdId}} -->
+
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="form-group submit">
+          <div>
+            <button type="button" class="btn" (click)="backToStep(1)">{{'BUTTON.BACK' | translate}}</button> &nbsp;
+            <button type="button" class="btn" (click)="validateStep(2)">{{'BUTTON.NEXT' | translate}}</button>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class=" mandatory text-right">
+            * {{'COMMON.MANDATORY' | translate}} 
+          </div>
+    </div>
+
+
+
+  </div>
+
+  <div class="row " *ngIf="stepNumber==3">
+      <div class="col-sm-2 col-md-2 col-lg-2">
+          
+      </div>
+
+    <div class="col-sm-8 col-md-8 col-lg-8 m-auto form">
+      <div formArrayName="complaint" *ngFor="let item of addComplaintForm.get('complaint')['controls']; let i = index;">
+        <div [formGroupName]="i">
+          <div class="row">
+
+            <div class="col-md-12 text-right" *ngIf="i>0"><button type="button" class="btn-link"
+                (click)="removeComplaintForm(i)">{{'COMPLAINANT.REMOVE_COMPLAINT' | translate}}</button> </div>
+            <div class="col-md-6 col-lg-6 part1">
+              <div class="form-group">
+                <label for="dateOfIncidence">{{'COMPLAINANT.DATE_OF_INCIDENT' | translate}} *
+
+                </label>
+                <!-- <input type="text" formControlName="dateOfIncidence" class="form-control text-box" id="dateOfIncidence"
+              placeholder="Enter date Of Incidence"> -->
+                <div class="datepicker-container">
+                  <!-- <dp-date-picker ></dp-date-picker> -->
+                  <!-- <ng-datepicker  onBlur="validateDate($event)" formControlName="date" (change)="validateDate('111')" placeholder="placeholder" [options]="options"
+                    position="bottom-left"></ng-datepicker> -->
+                  <!-- <dp-date-picker  formControlName="date" onChange= "validateDate($event)"  placeholder="placeholder"></dp-date-picker> -->
+                  <!-- <dp-date-picker  formControlName="date" [theme]="'dp-material'" (onChange)="validateDate($event,i)" [config]="dtOptions"   >
+                      
+                    </dp-date-picker> -->
+                  <input type="text" readonly formControlName="date" placeholder="{{'COMMON.SELECT_DATE' | translate}}"
+                    class="form-control text-box" [theme]="'dp-material'" (onChange)="validateDate($event,i)"
+                    [dpDayPicker]="dtOptions" />
+                </div>
+                <div *ngIf="stepNumberSubmitted > 2 && f.complaint.controls[i].controls.date.errors"
+                  class="alert alert-danger">
+                  <div *ngIf="f.complaint.controls[i].controls.date.errors.required">
+                    {{'COMPLAINANT.DATE_OF_INCIDENT' | translate}}
+                    {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="location">{{'COMPLAINANT.LOCATION' | translate}}
+
+                </label>
+                <input type="text" formControlName="location" class="form-control text-box" id="location"
+                  placeholder="">
+              </div>
+              <div class="form-group" *ngIf="showReasonBox && showReasonBox[i] == true">
+                <label for="description">{{'COMPLAINANT.REASON_FOR_DELAY' | translate}} *
+
+                </label>
+                <textarea formControlName="lateReason" class="form-control text-box" id="lateReason" placeholder=""
+                  rows="4" cols="5">
+                                            </textarea>
+                <div *ngIf="stepNumberSubmitted > 2 && f.complaint.controls[i].controls.lateReason.errors"
+                  class="alert alert-danger">
+                  <div *ngIf="f.complaint.controls[i].controls.lateReason.errors.required">
+                    {{'COMPLAINANT.REASON' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 part1">
+              <div class="form-group">
+                <label for="timeOfIncidence">{{'COMPLAINANT.TIME_OF_INCIDENT' | translate}}
+
+                </label>
+                <input readonly formControlName="time" class="form-control text-box" id="timeOfIncidence"
+                  atp-time-picker value="19:00" />
+                <!-- <input type="text" formControlName="time" class="form-control text-box" id="timeOfIncidence"
+                  placeholder=""> -->
+              </div>
+              <div class="form-group">
+                <label for="description">{{'COMPLAINANT.DESCRIPTION' | translate}}
+
+                </label>
+                <textarea formControlName="description" class="form-control text-box" id="description" placeholder=""
+                  rows="4" cols="5">
+                                          </textarea>
+                <div *ngIf="stepNumberSubmitted > 2 && f.complaint.controls[i].controls.description.errors"
+                  class="alert alert-danger">
+                  <div *ngIf="f.complaint.controls[i].controls.description.errors.required">
+                    {{'COMPLAINANT.DESCRIPTION' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-12 text-right"> <button type="button"  class="btn-link"
+          (click)="addItem()">{{'COMPLAINANT.ADD_OTHER_INCIDENT' | translate}}</button></div>
+      <div class="col-sm-12 m-auto">
+        <div class="form-group">
+          <label for="expectedAction">{{'COMPLAINANT.EXPECTEDACTION' | translate}} *
+
+          </label>
+          <textarea formControlName="expectedAction" class="form-control text-box expectedAction" id="expectedAction"
+            placeholder="" rows="4" cols="5">
+                                      </textarea>
+          <div *ngIf="stepNumberSubmitted > 2 && f.expectedAction.errors" class="alert alert-danger">
+            <div *ngIf="f.expectedAction.errors.required">
+              {{'COMPLAINANT.EXPECTEDACTION' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class=" mandatory text-right">
+            * {{'COMMON.MANDATORY' | translate}} 
+          </div>
+    </div>
+    <div class="form-group submit">
+      <div>
+        <button type="button"  class="btn" (click)="backToStep(2)">{{'BUTTON.BACK' | translate}}</button> &nbsp;
+        <button type="button"  class="btn" (click)="validateStep(3)">{{'BUTTON.NEXT' | translate}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="stepNumber ==4">
+      <div class="col-sm-2 col-md-2 col-lg-2">
+          
+      </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 m-auto form">
+      <div formArrayName="respondent" *ngFor="let item of addComplaintForm.get('respondent').controls; let i = index;">
+        <div [formGroupName]="i">
+          <div class="row">
+            <div class="col-md-12 text-right" *ngIf="i>0">
+              <button type="button"  class="btn-link" (click)="removeRespondent(i)">{{'COMPLAINANT.REMOVE_RESPONDENT' | translate}}
+              </button> </div>
+            <div class="col-md-6 col-lg-6 part1">
+              <div class="form-group">
+                <label for="name">{{'COMPLAINANT.NAME_OF_RESPONDENT' | translate}} *</label>
+                <input type="text" formControlName="name" class="form-control text-box" id="nameofRespondent"
+                  placeholder="">
+                <div *ngIf="stepNumberSubmitted > 3 && f.respondent.controls[i].controls.name.errors"
+                  class="alert alert-danger">
+                  <div *ngIf="f.respondent.controls[i].controls.name.errors.required">
+                    {{'COMPLAINANT.NAME_OF_RESPONDENT' | translate}}
+                    {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="department">{{'COMPLAINANT.DEPARTMENT' | translate}}
+
+                </label>
+                <input type="text" formControlName="department" class="form-control text-box" id="department"
+                  placeholder="">
+
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 part1">
+              <div class="form-group">
+                <label for="relationship">{{'COMPLAINANT.WORKING_RELATIONSHIP' | translate}}
+
+                </label>
+                <input type="text" formControlName="relationship" class="form-control text-box" id="relwithrepondent"
+                  placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="designation">{{'COMPLAINANT.Designation' | translate}}
+
+                </label>
+                <input type="text" formControlName="designation" class="form-control text-box" id="designation"
+                  placeholder="">
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 text-right"><button type="button"  class="btn-link"
+          (click)="addRespondent()">{{'COMPLAINANT.ADD_ANOTHER_RESPONDENT' | translate}}</button></div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class=" mandatory text-right">
+            * {{'COMMON.MANDATORY' | translate}} 
+          </div>
+    </div>
+    <div class="col-sm-12 col-md-8 col-lg-8 m-auto form">
+      <div class="col-sm-12 form-group form-group-radio">
+        <label for="timeOfIncidence">{{'COMPLAINANT.COMPLAINT_AGAINST_EMPLOYER' | translate}} ? * &nbsp;&nbsp;
+
+        </label>
+        <input type="radio" class="form-control-radio" formControlName="respondentEmployer" [value]=true />
+        {{'COMPLAINANT.YES' | translate}}&nbsp;&nbsp;
+        <input type="radio" checked="true" class="form-control-radio" formControlName="respondentEmployer"
+          [value]=false />
+        {{'COMPLAINANT.NO' | translate}}
+
+        <div *ngIf="stepNumberSubmitted > 3 && f.respondentEmployer.errors" class="alert alert-danger">
+          <div *ngIf="f.respondentEmployer.errors.required">{{'COMPLAINANT.COMPLAINT_AGAINST_EMPLOYER' | translate}}
+            {{'ERROR_MSG.IS_REQUIRED' | translate}}</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="form-group submit">
+      <div>
+        <button type="button"  class="btn" (click)="backToStep(3)">{{'BUTTON.BACK' | translate}}</button> &nbsp;
+
+        <button type="button"  type="submit" class="btn" (click)="addComplaint()">{{'BUTTON.SUBMIT' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</form>
+<br /><br />

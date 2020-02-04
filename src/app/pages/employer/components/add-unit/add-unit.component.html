@@ -1,0 +1,82 @@
+<div class="row ">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-12  title">
+        Confirm
+details to complete the registration process. After confirming you will be able
+to proceed to constitute ICC
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <alert></alert>
+      </div>
+  <div class="col-sm-12 col-md-8 col-lg-8 m-auto form">
+    <form [formGroup]="addUnit">
+      <input type ="hidden" formControlName="emailId" id="emailId" value= "{{emailId}}" />
+      <input type ="hidden" formControlName="organisation" id="organisation" value= "{{organisation}}" />
+      <input type ="hidden" formControlName="regNumber" id="regNumber" value= "{{orgCode}}" />
+      
+      <div class="row" >
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="name">Unit Name*</label>
+            <input type="text" formControlName="unitName" class="form-control" id="unitName" readonly placeholder="">
+          </div>
+          <!-- <div class="form-group">
+            <label for="unitpincode">Unit Pin Code*</label>
+            <input type="number" formControlName="unitpincode" class="form-control" id="unitpincode" placeholder="">
+          </div> -->
+
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="unitaddress">Unit Address*</label>
+           
+            <textarea readonly
+                                        
+                                            formControlName="unitaddress"
+                                            class="form-control "
+                                            id="unitaddress"
+                                            placeholder=""
+                                            rows = "7" cols = "5"
+                                          >
+
+                                          </textarea>
+<!-- <input type="text" formControlName="address" class="form-control" id="address" placeholder="address"> -->
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 part1">
+          <!-- <div class="form-group">
+            <input type="checkbox" value="1" formControlName="sameAsEmployer"  name="sameAsEmployer"  (click)="setEmployerAsHead()" />Unit Head Same as Employer
+          </div> -->
+
+        </div>
+        </div>
+
+        <div class="row" >
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="unitHead">Unit Head / Supervisor*</label>
+            <input type="text" readonly formControlName="headname" class="form-control" id="unitHead" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="unitHeadMobile">Unit Head's Mobile Number*</label>
+            <input type="text" readonly formControlName="headmobileNumber" class="form-control" id="unitHeadMobile" placeholder="">
+          </div>
+
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="unitHeadEmail">Unit Head's Email*</label>
+            <input type="text" readonly formControlName="heademailId" id="unitHeadEmail" class="form-control">
+          </div>
+        </div>
+        </div>
+        <div class="col-md-12 col-lg-12 ">
+        <div class="submit">
+           
+            <button type="submit" class="btn btn-primary round" (click) = "saveUnitDetails()">Confirm</button>
+          </div><br><br></div>
+      
+    </form>
+  </div>
+  </div>

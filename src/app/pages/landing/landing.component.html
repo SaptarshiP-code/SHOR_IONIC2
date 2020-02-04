@@ -1,0 +1,80 @@
+
+<ion-content scrollX="true">
+<alert></alert>
+<div class="container-fluid back container-block">
+  <div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-6 p-0 wings ml-auto">
+      <div class="margin-top ">
+        <div class="row">
+            <div class="col-lg-2"></div>
+          <div class="col-lg-4 ">
+            <div class = "shor-img text-center">
+          <img class="img-margin " src="../../../assets/images/girl-wings.png">
+        </div>
+          <p class="para1 m-0  text-center">S.H.O.R.</p>
+        </div>
+         <!-- </div>
+        <div class="col-md-6 admin m-auto  text-left"> -->
+            <div class="col-lg-4 ">
+              <div class="logo-img text-center">
+          <img class="up-logo" src="../../../assets/images/up-logo.png">
+        </div>
+          <p class="para3 m-0 text-center">{{'LANDING_PAGE.DISTRICT_ADMINISTRATION' | translate}}<br />
+            {{'LANDING_PAGE.GAUTAM_BUDDH_NAGAR' | translate}}</p>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+      </div>
+       <!-- <div class="margin-top1 row">
+        <div class="col-md-6 admin-div m-auto">
+          <p class="para1 m-0">S.H.O.R.</p>
+        </div>
+        <div class="col-md-6 admin m-auto ">
+          <p class="para3 m-0">{{'LANDING_PAGE.DISTRICT_ADMINISTRATION' | translate}}<br />
+            {{'LANDING_PAGE.GAUTAM_BUDDH_NAGAR' | translate}}</p>
+        </div>
+      </div>  -->
+      <div class="row">
+        <p class="dmnote"><a [routerLink]="['/dm-desk']"><u>{{'DMDESK.DMDESK_CAPTION' | translate}}</u></a></p>
+      </div>
+
+      <p class="para2 m-0">({{'LANDING_PAGE.SEXUAL_HARASSMENT_ONLINE_REDRESSAL' | translate}})</p>
+      <p class="para3 m-0"> {{'LANDING_PAGE.SEXUAL_HARASSMENT_OF_WOMEN_AT_WORKPLACE' | translate}}</p>
+      <p class="para3 m-0">{{'LANDING_PAGE.PREVENTION_ACT' | translate}}</p>
+
+      <div class="margin-top row">
+        <div class="col-md-12 col-sm-12 col-lg-6 text-center ">
+          <app-buttons (click)="navigateFileComplaint()" icon="filecomplaint"
+            title="{{'LANDING_PAGE.FILE_COMPLAINT' | translate}}" color="#891199">
+
+          </app-buttons>
+        </div>
+        <div class="col-md-12 col-sm-12 col-lg-6 text-center ">
+          <a [routerLink]="['/complaints']">
+            <app-buttons icon="view" title="{{'LANDING_PAGE.VIEW_COMPLAINT_STATUS' | translate}}" color="#891199">
+            </app-buttons>
+          </a>
+        </div>
+
+
+      </div>
+
+
+    </div>
+    <div class="col-md-3 gov-text ">
+
+      <div class="powered-by">
+        <span>{{'LANDING_PAGE.POWERED_BY_EN' | translate}} </span><br />
+        <img class="interra-logo" src="../../../assets/images/interra-it.png"><br />
+        <span>{{'LANDING_PAGE.POWERED_BY_HN' | translate}} </span>
+      </div>
+    </div>
+  </div>
+</div> 
+</ion-content>
+
+<!-- <p>
+  <a href="/login">Login</a>
+</p> -->
+

@@ -1,0 +1,271 @@
+@import '../../scss/common.scss';
+ 
+  .img {
+    padding: 5px;
+    height: 80%;
+    width: 80%;;
+  }
+
+  .left {
+    margin-left: 50%;
+  }
+
+  .shor{
+    width: 100%;
+    
+    color: #424242;
+    
+    text-decoration: none solid rgb(66, 66, 66);
+    text-align: left;
+    padding: 22px 0 0 0;
+    margin-bottom: 0;
+  }
+  .shor h1{
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  .lang {
+    width: 100%;
+    height: 16px;
+    font-size: 12px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+  }
+
+nav {
+  width: 100%;
+  height: 100%;
+}
+
+.van {
+ padding-left: 0px !important;
+ padding-right: 0px !important;
+}
+
+.bg {
+  background: #cfd8dc;
+}
+
+.back {
+  background-color: #fffde7;
+  background-image: url(/assets/images/dots.png);
+  background-position: left;
+  background-repeat: no-repeat;
+  .mt-center{
+    margin-top: 116px;
+  }
+  .mt-btn {
+    margin-top:7.68rem!important;
+  }
+
+  .wings .img-margin {
+    margin-top: 25px;
+    //margin-bottom: 25px;
+    height: 150px;
+    width: 94px;
+  }
+  .para1 {
+    font-size: 40px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+    text-align: center
+  }
+
+  .para2 {
+    font-size: 20px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+    text-align: center
+  }
+
+  .para3 {
+    font-size: 16px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+    text-align: center;
+    padding-top:5px;
+
+  }
+
+  .img-margin {
+    // margin-left: 30%;
+    margin-top: $gap;
+  }
+
+  .margin-top {
+    margin-top: 0.5*$gap;
+  }
+}
+
+.margin-left{
+      margin-left: 40px;
+}
+
+.black {
+  background: black;
+  height: 70px;
+  .p1{
+    width: 179px;
+    height: 49px;
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 300;
+    text-decoration: none solid rgba(255, 255, 255, 0.6);
+  }
+  .margin-left{
+    margin-left: 40px;
+  }
+  .margin-all{
+    margin-top: 10px;
+    margin-bottom: 11px;
+  }
+  .col-2 {
+    flex: 0 0 1.666667%;
+    max-width: 16.666667%;
+  }
+  .foot1 {
+    font-size: 12px;
+    color: #e6e6e6;
+    font-weight: 400;
+    text-decoration: none solid rgba(255, 255, 255, 0.6)
+  }
+
+  .foot2 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none solid rgb(255, 255, 255);
+  
+  }
+}
+
+.grey {
+  background: #424242;
+  text-align: center;
+  color: $white;
+  height: 30px !important;
+}
+
+.list{
+  text-align: center;
+}
+.grey .list li a {
+  font-size: 12px;
+  color: #ffffff;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-align: center;
+  font-weight: 600;
+}
+
+.wings {
+  align-content: center;
+  margin-bottom: 20px;
+}
+.up-logo{
+  height:100px;
+  width:100px;
+  margin-bottom: 14px;
+  margin-top: 56px;
+}
+.margin-top1 {
+  margin-bottom: 31px;
+}
+.admin-div {
+  height: 70%;
+  //padding-top: 30%;
+}
+.admin {
+  text-align: center;
+}
+.gov-text{
+  text-align: center;
+  padding-top: 85px;
+}
+.powered-by{
+font-family: Open Sans;
+font-size: 8px;
+color: #424242;
+text-decoration: none solid rgb(66, 66, 66);
+letter-spacing: 8px;
+text-align: right;
+display: block;
+    position: absolute;
+    right: 10px;
+    bottom: 30px;
+}
+.digitalindia{
+  width: auto;
+  height: 40px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  float:right;
+}
+
+.nav-header{
+  .navbar-height{
+    height: 40px !important;
+  }
+}
+
+.navbar-nav .nav-item{
+  // width: 51px;
+  // height: 21px;
+  // font-family: Open Sans;
+  font-size: 16px;
+  // color: #9025a9;
+  // font-weight: 600;
+  // text-decoration: none solid rgb(144, 37, 169);
+  // text-align: center;
+  padding-left: 40px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #424242;
+    font-weight: 600;
+}
+.active a {
+  width: 51px;
+  height: 21px;
+  // font-family: Open Sans;
+  font-size: 16px;
+  color: #9025a9 !important;
+  font-weight: 600;
+  text-decoration: none solid rgb(144, 37, 169);
+  text-align: center;
+}
+
+.nav-header .navbar-nav .nav-item:last-child {
+  padding-left: 100px !important; 
+}
+
+li{
+  cursor: pointer;
+}
+
+.dmnote {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin: auto;
+
+}
+a {
+  color: #3949ab !important;
+}
+a:hover {
+  color: #3949ab;
+}
+.row{
+  margin-left: 0!important;
+  margin-right: 0!important;
+}
+.shor-img, .logo-img {
+  min-height: 175px;
+  display: block;
+}

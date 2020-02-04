@@ -1,0 +1,399 @@
+<div class="row">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4  text-left ">
+      <!-- <span class="step">{{'DETAIL_COMPLAINANT.STEP_1_2' | translate}} </span> -->
+      <span class="step-desc">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</span>
+    </div>
+    <div class="col-sm-4 m-auto">{{complaintId}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      <div class=" text-right">
+        <a class="back-link" [routerLink]="['/complaints/detail/'+complaintId]">{{'BUTTON.BACK' | translate}}</a> &nbsp;
+        &nbsp;
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-9 m-auto"
+    *ngIf="loadData == true && complaintDetails.workPlace && complaintDetails.workPlace.organisation">
+    <div class="col-md-12 col-lg-12 row-head text-left">
+      {{'DETAIL_COMPLAINANT.WORKPLACE_DETAILS' | translate}}
+
+    </div>
+    <div class="row parent-layout">
+
+      <div class="col-md-12 text-center">
+        <div *ngIf="complaintDetails.workPlace.organisation.name">{{complaintDetails.workPlace.organisation.name}}
+
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-6 part1">
+        <div
+          *ngIf="complaintDetails.workPlace && complaintDetails.workPlace.organisation && complaintDetails.workPlace.organisation.unit">
+          {{complaintDetails.workPlace.organisation.unit.name | titlecase }}
+        </div>
+        <div *ngIf="complaintDetails.workPlace.organisation.unit">
+          {{complaintDetails.workPlace.organisation.unit.address}}
+        </div>
+        <!-- <div class="title" *ngIf="complaintDetails.workPlace.organisation.category!= 'miscellaneous'">
+      {{'DETAIL_COMPLAINANT.ORGANISATION' | translate}}</div> -->
+        <div class="title"
+          *ngIf="complaintDetails.workPlace.organisation.category== 'dwelling place or house' ; else other">
+          {{'COMPLAINANT.ADDRESS' | translate}}</div>
+
+        <div class="text">
+
+
+          <div
+            *ngIf="complaintDetails.workPlace.organisation.address && ( !complaintDetails.workPlace.organisation.unit || !complaintDetails.workPlace.organisation.unit.code)">
+            {{complaintDetails.workPlace.organisation.address}}
+            {{complaintDetails.workPlace.organisation.pinCode}}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 col-lg-6 part1" *ngIf="complaintDetails.workPlace.organisation.unit">
+        <div class="title">{{'DETAIL_COMPLAINANT.UNIT_HEAD' | translate}}</div>
+        <div class="text">{{complaintDetails.workPlace.organisation.unit.head.name | titlecase }}</div>
+
+      </div>
+      <div class="col-md-6 col-lg-6 part1" *ngIf="complaintDetails.workPlace.organisation.unit">
+        <div class="title">{{'DETAIL_COMPLAINANT.ICC_STATUS' | translate}}</div>
+        <div class="text">
+
+          <div *ngIf="complaintDetails.workPlace.organisation.unit.iccStatus;else icc_no">
+            <!-- {{'DETAIL_COMPLAINANT.YES' | translate}} --> Constituted
+          </div>
+
+          <ng-template #icc_no>
+            <!-- {{'DETAIL_COMPLAINANT.NO' | translate}} --> Not Constituted
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-6 " *ngIf="complaintDetails.workPlace.organisation.unit">
+        <div class="title">{{'DETAIL_COMPLAINANT.ICC_CHAIRPERSON' | translate}}</div>
+        <div class="text">{{complaintDetails.workPlace.organisation.unit.iccChairperson  | titlecase }}</div>
+      </div>
+    </div>
+    <div class="text-right"
+      *ngIf="complaintDetails.workPlace && complaintDetails.workPlace.organisation && complaintDetails.workPlace.organisation.unit && complaintDetails.workPlace.organisation.unit.iccStatus == true">
+      <button type="button" class="btn-link" (click)="toggleForm(0)">
+        <div *ngIf="changeOrg==true;else nochange"> Don't Want to change, Please close </div>
+       <ng-template #nochange> Do You want to change organisation? Click Here</ng-template>
+      </button>
+    </div>
+  </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+    <div class=" mandatory text-right">
+      * Mandatory
+    </div>
+  </div>
+</div>
+<div class="row " *ngIf="loadData == true">
+
+  <div class="col-sm-9 col-md-9 col-lg-9 form m-auto">
+    <form class="form" [formGroup]="transferComplaintForm">
+      <div class="row" *ngIf="changeOrg == true">
+
+
+        <div class="col-sm-12 col-md-12 col-lg-12 form">
+          <div class="row">
+            <div class="col-md-4 col-lg-4 part1">
+              <div class="form-group ">
+                <label> {{'COMPLAINANT.WORKPLACE_CATEGORY' | translate}} *</label>
+
+                <select class="form-control text-box" id="workPlaceCategory" formControlName="orgCategory"
+                  class="form-control " [ngClass]="{
+                    'is-invalid': transferSubmitted && f.orgCategory.errors}">
+                  <option value="">{{'DETAIL_COMPLAINANT.SELECT_ONE' | translate}}</option>
+                  <option *ngFor="
+                        let workPlaceCategory1 of workPlaceCategory;
+                        let i = index
+                      " [value]="workPlaceCategory[i].id">
+                    {{ workPlaceCategory[i].name | translate}}
+                  </option>
+                </select>
+                <div *ngIf="transferSubmitted && f.orgCategory.errors" class="invalid-feedback">
+                  <div *ngIf="f.orgCategory.errors.required">
+                    {{'COMPLAINANT.WORKPLACE_CATEGORY' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-4 part1">
+              <div class="form-group">
+                <label class="search-label">{{'COMPLAINANT.SEARCH_YOUR_ORGANISATION' | translate}} *</label>
+                <input class="form-control text-box orgsearch" type="text" formControlName="pattern" value=""
+                  (change)="getOrganization()" class="form-control " [ngClass]="{
+                      'is-invalid': transferSubmitted && f.pattern.errors}" />
+                <img class="search-icon" (click)="getOrganization()" src="./../../../../../assets/images/Search@2.png">
+
+                <div *ngIf="transferSubmitted && f.pattern.errors" class="invalid-feedback">
+                  <div *ngIf="f.pattern.errors.required">
+                    {{'COMPLAINANT.SEARCH_YOUR_ORGANISATION' | translate}} {{'ERROR_MSG.IS_REQUIRED' | translate}}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="col-md-12 col-lg-12">
+            <div *ngIf="showOrgTable == true">
+              <div *ngIf="transferSubmitted && f.orgunit.errors" class="alert alert-danger">
+                <div *ngIf="f.orgunit.errors.required">
+                  {{'COMPLAINANT.ORGANIZATION_REQUIRED' | translate}}
+                </div>
+              </div>
+
+              <div *ngIf="organizationData?.length> 0 && showOrgTable == true">
+                <table class="table table-striped" [mfData]="organizationData" #mf="mfDataTable" [mfRowsOnPage]="5">
+                  <thead>
+                    <tr>
+                      <th style="width: 25%">
+                        <mfDefaultSorter by="name">{{'COMPLAINANT.ORGANISATION' | translate}}</mfDefaultSorter>
+                      </th>
+                      <th style="width: 65%">
+                        <mfDefaultSorter by="emailId">{{'COMPLAINANT.ADDRESS' | translate}}</mfDefaultSorter>
+                      </th>
+                      <!-- <th>No of Employee</th> -->
+                      <th>{{'COMPLAINANT.SELECT' | translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let organizations of mf.data">
+                      <td>{{ organizations.orgName }}
+
+                      </td>
+                      <td>{{ organizations.orgAddress }}</td>
+                      <!-- <td>{{ organizations.totalEmp }}</td> -->
+                      <td>
+                        <input type="radio" formControlName="orgunit" name="orgunit" [value]="organizations._id"
+                          (click)="getUnits(organizations)" />
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="4">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div *ngIf="organizationData?.length== 0 && showOrgTable == true"> No Record Found </div>
+            </div>
+
+            <input type="hidden" value="{{selectedOrgCode}}" formControlName="regNumber" readonly />
+             
+            <div *ngIf="unit">
+                <div *ngIf="transferSubmitted && f.unitDetail.errors" class="alert alert-danger">
+                    <div *ngIf="f.unitDetail.errors.required">
+                      {{'COMPLAINANT.UNIT_REQUIRED' | translate}}
+                    </div>
+                  </div>
+              <table class="table table-striped" [mfData]="unitData" #mf="mfDataTable" [mfRowsOnPage]="5">
+                <thead>
+                  <tr>
+                    <th style="width: 20%">
+                      <mfDefaultSorter by="name">{{'COMPLAINANT.UNIT_CODE' | translate}}</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                      <mfDefaultSorter by="emailId">{{'COMPLAINANT.NAME' | translate}}</mfDefaultSorter>
+                    </th>
+                    <th style="width: 50%">{{'COMPLAINANT.ADDRESS' | translate}}</th>
+                    <!-- <th style="width: 20%">{{'COMPLAINANT.PINCODE' | translate}}</th> -->
+                    <th style="width: 10%">{{'COMPLAINANT.SELECT' | translate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let unit of mf.data">
+                    <td>{{ unit.code }}</td>
+                    <td>{{ unit.name }}</td>
+                    <td>{{ unit.address }}</td>
+                    <!-- <td>{{ unit.pinCode }}</td> -->
+                    <td>
+                      <input type="radio" formControlName="unitDetail" [value]="unit.code" name="unitDetail"
+                        (click)="getUnitDetails(unit)" />
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="4">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div>
+              <input type="hidden" formControlName="unitCode" readonly />
+              <div *ngIf="unitDetails" class="icc-data">
+
+                <!-- <div class="text-center org-name"> {{selectedorgData.org.name}}
+      
+                    <input type="text" value="{{selectedorgData.org.code}}" formControlName="organisationCode" readonly />
+                  </div> -->
+
+                <div class="row iccrow">
+                  <div class="col-md-6">
+                    <div class="text"> {{iccDetails.head.name | titlecase}}
+
+                    </div>
+                    <div class="head"> {{iccDetails.address}}<br>
+                      {{iccDetails.pinCode}} </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <span class="head"> ICC Status: </span>
+                    <span class="text">
+                      <span *ngIf="iccDetails.iccStatus;else icc_no">Present</span>
+                      <ng-template #icc_no>
+                        Not Present
+                      </ng-template>
+                    </span> <br />
+                    <span class="head"> ICC Chairperson:</span>
+                    <span class="text"> {{iccDetails.iccChairperson | titlecase}}</span>
+                  </div>
+                  <div class="col-md-12"><span class="head">Unit Head: </span>
+                    <span class="text"> {{iccDetails.head.name | titlecase}}
+                    </span>
+                  </div>
+                </div>
+
+
+                <!-- {{iccDetails.head.emailIdId}} -->
+
+
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
+      </div>
+      <div class="col-md-8 col-lg-8">
+        <div class="form-group">
+          <label class="search-label">{{'DETAIL_COMPLAINANT.REASON_FOR_TRANSFER' | translate}} *</label>
+          <textarea formControlName="reason" class="form-control "
+            [ngClass]="{'is-invalid': transferSubmitted && f.reason.errors}">>
+
+              </textarea>
+
+          <div *ngIf="transferSubmitted && f.reason.errors" class="invalid-feedback">
+            <div *ngIf="f.reason.errors.required">
+              {{'DETAIL_COMPLAINANT.REASON_REQUIRED' | translate}}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group submit">
+        <div>
+          <button type="button" class="btn" [routerLink]="['/complaints/detail/'+complaintId]">{{'BUTTON.BACK' | translate}}</button>
+          &nbsp;
+          <button type="button" class="btn"
+            (click)="open(content)">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</button>&nbsp;
+          <button type="button" class="btn" (click)="resetData()">{{'BUTTON.RESET' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-lg-12">
+    <ng-template #content let-modal>
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <alert></alert>
+        <div
+          *ngIf="complaintDetails.workPlace && complaintDetails.workPlace.organisation && 
+          complaintDetails.workPlace.organisation.unit && 
+          complaintDetails.workPlace.organisation.unit.iccStatus == true && changeOrg==false; else changeorgtemp">
+          <div *ngIf="transferSuccess == false && transferError == false">
+            Are you sure to transfer the complaint to {{complaintDetails.workPlace.organisation.unit.name}}
+            </div>
+          </div>
+          <ng-template #changeorgtemp> 
+          <div *ngIf="transferSuccess == false">
+            <!-- {{'DETAIL_COMPLAINANT.CONFIRM_TRANSFER_MESSAGE' | translate}}  -->
+
+            You are transfering Your complaint {{complaintId}} To:
+            <div *ngIf="unitDetails" class="icc-data">
+
+              <!-- <div class="text-center org-name"> {{selectedorgData.org.name}}
+  
+                <input type="text" value="{{selectedorgData.org.code}}" formControlName="organisationCode" readonly />
+              </div> -->
+
+              <div class="row iccrow">
+                <div class="col-md-12">
+                    <strong>{{iccDetails.name | titlecase}}</strong>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="text"> {{iccDetails.head.name | titlecase}}
+
+                  </div>
+                  <div class="head"> {{iccDetails.address}}<br>
+                    {{iccDetails.pinCode}} </div>
+
+                </div>
+                <div class="col-md-6">
+                  <span class="head"> ICC Status: </span>
+                  <span class="text">
+                    <span *ngIf="iccDetails.iccStatus;else icc_no">Present</span>
+                    <ng-template #icc_no>
+                      Not Present
+                    </ng-template>
+                  </span> <br />
+                  <span class="head"> ICC Chairperson:</span>
+                  <span class="text"> {{iccDetails.iccChairperson | titlecase}}</span>
+                </div>
+                <div class="col-md-12"><span class="head">Unit Head: </span>
+                  <span class="text"> {{iccDetails.head.name | titlecase}}
+                  </span>
+                </div>
+              </div>
+
+
+              <!-- {{iccDetails.head.emailIdId}} -->
+
+
+            </div>
+
+          </div>
+        </ng-template>
+          <div *ngIf="transferSuccess == true">{{'DETAIL_COMPLAINANT.TRANSFER_SUCCESS' | translate}}</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" *ngIf="(transferSuccess == false && transferError == false)" class="btn btn-outline-dark"
+            (click)="transferComplaint()">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</button> &nbsp; &nbsp;
+          <!-- <button type="button" *ngIf="transferSuccess == false" class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">{{'DETAIL_COMPLAINANT.NO'  | translate}}</button> -->
+          <button type="button" *ngIf="(transferSuccess == true || transferError == true)" class="btn btn-outline-dark"
+            (click)="confirmationClose()">{{'DETAIL_COMPLAINANT.OK' | translate}}</button>
+        </div>
+
+    </ng-template>
+  </div>

@@ -1,0 +1,89 @@
+<div class="row ">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-4  title">
+          Workplace Units
+      </div>
+    </div></div>
+    <div class="col-sm-8 m-auto">
+<table
+class="table table-striped table-bordered"
+[mfData]="unitsData"
+#mf="mfDataTable"
+[mfRowsOnPage]="25"
+>
+<thead>
+  <tr>
+    <th style="width: 15%">
+      <mfDefaultSorter by="code">Unit Name </mfDefaultSorter>
+    </th>
+    <th style="width: 35%">
+      <mfDefaultSorter by="name">Address</mfDefaultSorter>
+    </th>
+    <th style="width: 35%">Unit Head</th>
+    <th style="width: 10%">ICC Chairperson</th>
+    <th style="width: 5%">ICC Status</th>
+    <th style="width: 5%">Details</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let organizations of mf.data" class="link">
+      <td >{{ organizations.name }}</td>
+      <td >
+          {{ organizations.address }}<br/>
+          <!-- <div *ngIf = "organizations.pinCode" >{{ organizations.pinCode }}</div> -->
+        </td>
+    <td >
+      <div >
+          {{ organizations.head.name | titlecase }}
+          {{ organizations.head.emailId }}
+          {{ organizations.head.mobileNumber }}
+      </div>
+      
+      
+    </td>
+   
+      <td >
+          {{ organizations.iccChairperson | titlecase }}
+          <!-- <div *ngFor = "let unitData of organizations.unit ">
+              {{ unitData.iccChairperson | titlecase }}
+          </div> -->
+          
+          
+        </td>
+        <td >
+            <!-- <div *ngFor = "let unitData of organizations.unit "> -->
+              <div>
+                <div *ngIf="organizations.iccStatus;else icc_no">
+                    <!-- {{'COMMON.YES' | translate}} -->
+                    Yes
+                </div>
+                
+                <ng-template #icc_no>
+                  No
+                    <!-- {{'COMMON.NO' | translate}} -->
+                </ng-template>
+    
+            </div>
+            
+          </td>
+          <td >
+              <div >
+                  <a href="javascript:void();" (click) ="getIccList(organizations)">ICC Details</a> 
+              </div>
+              
+            </td>
+  </tr>
+</tbody>
+<tfoot>
+  <tr>
+    <td colspan="6">
+      <mfBootstrapPaginator
+        [rowsOnPageSet]="[5, 10, 15]"
+      ></mfBootstrapPaginator>
+    </td>
+  </tr>
+</tfoot>
+</table></div>
+<!-- <div class="md-col-12 ml-auto">
+<a  [routerLink]="['/employer/add-unit']"  class="btn add-button" >
+    Add Workplace Unit</a></div> -->

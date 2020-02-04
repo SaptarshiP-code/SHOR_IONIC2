@@ -1,0 +1,4 @@
+<div *ngIf="message" [ngClass]="message.cssClass">
+        <button class="close text-right" (click)="remove()">&times;</button>
+        <div >{{message.text | translate}}</div>
+</div>

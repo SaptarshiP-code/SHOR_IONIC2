@@ -1,0 +1,88 @@
+@import '../../../../scss/common.scss';
+
+.row{
+  margin:0;
+}
+.form-header{
+  background-color: #ebf0ff;
+  background-size: cover;
+  text-align: left;
+  color: #424242;
+  padding: 5px 10px;
+  font-size: 20px;
+  text-decoration: none solid rgb(66, 66, 66);
+  height:40px;
+}
+.alert.alert-danger {
+  text-align: center;
+}
+.step{
+  font-size: 16px;
+  font-weight: 600;
+  padding-left: 5%
+
+  }
+  .step-desc{
+  font-size: 16px;
+  }
+
+.form {
+  padding: $gap;
+  .submit {
+    margin-top: 5%;
+  }
+  .form-control{
+    font-size: 12px;
+    height: 35px;
+  }
+  label{
+      height: 17px;
+      font-size: 12px;
+      color: #424242;
+      text-decoration: none solid rgb(66, 66, 66);
+      margin-bottom: 0px;
+  }
+  // .getOTPlink{
+  //   display: contents;
+  //   text-decoration: underline;
+  //   color: blue;
+  //   text-align: right;
+  // }
+  .btn{
+    border-radius: 5px;
+    background-color: #891199;
+    background-size: cover;
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none solid rgb(255, 255, 255);
+    text-align: center;
+    min-width:120px;
+  }
+}
+.ngx-show-hide-password .btn-primary,
+show-hide-password .btn-primary {
+  height: 100%!important;
+  font-size: 10px!important;
+}
+.input-group>.input-group-append>.btn {
+  height: 100%;
+  font-size: 10px!important;
+  z-index: 0!important;
+}
+.input-group-append.ngx-show-hide-password {
+  z-index: 0!important;
+}
+
+.btn-secondary {
+  color: #eee!important;
+  background-color: #fff!important;
+  border-color: #eee!important;
+}
+input#password {
+  z-index: 0;
+  z-index: 0;
+  /* border-right: 0px !important; */
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

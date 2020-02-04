@@ -1,0 +1,643 @@
+<div *ngIf="loadData">
+  <div class="row">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-4  text-left ">
+        <span class="step">{{'DETAIL_COMPLAINANT.STEP_1_2' | translate}} </span>
+        <span class="step-desc">{{'DETAIL_COMPLAINANT.VIEW_COMPLAINT' | translate}}</span>
+      </div>
+      <div class="col-sm-4 m-auto">{{complaintId}}
+      </div>
+      <div class="col-sm-4 m-auto">
+        <div class=" text-right"
+          *ngIf="((complaintDetails.status =='disposed' && userCategory=='do' && !complaintDetails.doSubmitted) || (complaintDetails.status =='disposed' && userCategory=='employer' && !complaintDetails.employerSubmitted) || complaintDetails.status =='In-Progress'); else disposedback">
+          <a class="back-link" [routerLink]="['/complaints']">{{'BUTTON.BACK' | translate}}</a> &nbsp; &nbsp;
+        </div>
+        <ng-template #disposedback>
+          <div class=" text-right"><a class="back-link"
+              [routerLink]="['/complaints/disposed']">{{'BUTTON.BACK' | translate}}</a> &nbsp; &nbsp;</div>
+        </ng-template>
+        <!-- <div class=" text-right"  *ngIf="((complaintDetails.status =='In-Progress' && userCategory=='do' && !complaintDetails.doSubmitted) || (complaintDetails.status =='In-Progress' && userCategory=='employer' && !complaintDetails.employerSubmitted))" >
+              <a  class="back-link"  [routerLink]="['/complaints']">{{'BUTTON.BACK' | translate}}</a> &nbsp; &nbsp;
+          </div> -->
+
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-8 col-lg-8 m-auto margin-bottom">
+      <div class="row">
+        <div class="col-md-12 col-lg-12 row-head">
+          {{'DETAIL_COMPLAINANT.STATUS' | translate}}
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="title">{{'DETAIL_COMPLAINANT.COMPLAINT_ID' | translate}}</div>
+          <div class="text">{{complaintId}} </div>
+
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="title">{{'DETAIL_COMPLAINANT.DATE' | translate}}</div>
+          <div class="text">{{complaintDetails.createdAt |date: 'MM/dd/yyyy h:mm a'}} </div>
+        </div>
+        <div class="col-md-6 col-lg-6 ">
+          <div class="title">{{'DETAIL_COMPLAINANT.STATUS' | translate}}</div>
+          <div class="text">{{complaintDetails.status}} </div>
+        </div>
+        <div class="col-md-6 col-lg-6 ">
+          <div class="title">{{'DETAIL_COMPLAINANT.PENDING_ON' | translate}}</div>
+          <div class="text">{{complaintDetails.complaintViewer | uppercase}} </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row-head">
+          {{'DETAIL_COMPLAINANT.COMPLAINANT_DETAILS' | translate}}
+        </div>
+        <div class="col-md-12 col-lg-12 ">
+          <div class="title">{{'DETAIL_COMPLAINANT.COMPLAINANT' | translate}}</div>
+          <div class="text">
+            <div *ngIf="complaintDetails.complainant">{{complaintDetails.complainant.name | titlecase }} </div>
+            <div *ngIf="!complaintDetails.complainant">{{complaintDetails.name | titlecase }} </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf=" complaintDetails.self == false">
+          <div class="col-md-12 col-lg-12 row-head">
+            {{'DETAIL_COMPLAINANT.REPRESENTATIVE_DETAILS' | translate}}
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.REPRESENTATIVE' | translate}}</div>
+            <div class="text">
+              <div *ngIf="complaintDetails.complainant">{{complaintDetails.name | titlecase }} </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="title">{{'DETAIL_COMPLAINANT.EMAIL' | translate}}</div>
+          <div class="text">{{complaintDetails.emailId}} </div>
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="title">{{'DETAIL_COMPLAINANT.MOBILE_NUMBER' | translate}}
+
+          </div>
+          <div class="text">{{complaintDetails.mobileNumber}}</div>
+
+        </div>
+        <div class="row" *ngIf=" complaintDetails.self == false">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.REASON_FOR_REPRESENTATION' | translate}}</div>
+            <div class="text">{{complaintDetails.reason | titlecase }}</div>
+          </div>
+          <div class="col-md-12 col-lg-12 ">
+            <div class="title">{{'DETAIL_COMPLAINANT.RELATIONSHIP_WITH_COMPLAINANT' | translate}}</div>
+            <div class="text">{{complaintDetails.relationship | titlecase }}</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row-head">
+          {{'DETAIL_COMPLAINANT.RESPONDENT_DETAILS' | translate}}
+        </div>
+        <div *ngFor="let respondent of respondentData;let i = index;" class="row parent-layout">
+          <div class="col-md-12 col-lg-12 row-head">
+            {{'DETAIL_COMPLAINANT.RESPONDENT' | translate}} {{i+1}}
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.NAME_OF_RESPONDENT' | translate}}</div>
+            <div class="text">{{respondent.name | titlecase }} </div>
+
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.WORKING_RELATIONSHIP_WITH_RESPONDENT' | translate}}</div>
+            <div class="text">{{respondent.relationship}} </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.DEPARTMENT' | translate}}</div>
+            <div class="text">{{respondent.department}} </div>
+
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.DESIGNATION' | translate}}</div>
+            <div class="text">{{respondent.designation}}</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 ">
+          <div class="title">{{'DETAIL_COMPLAINANT.IS_RESPONFENT_EMPLOYER' | translate}} ?</div>
+          <div class="text">
+            <div *ngIf="complaintDetails.respondentEmployer;else other_content">{{'DETAIL_COMPLAINANT.YES' | translate}}
+            </div>
+
+            <ng-template #other_content>{{'DETAIL_COMPLAINANT.NO' | translate}}
+            </ng-template>
+
+          </div>
+
+        </div>
+
+        <div class="row parent-layout" *ngIf="complaintDetails.workPlace && complaintDetails.workPlace.organisation">
+          <div class="col-md-12 col-lg-12 row-head">
+            {{'DETAIL_COMPLAINANT.WORKPLACE_DETAILS' | translate}}
+            <div
+              *ngIf="complaintDetails.workPlace && complaintDetails.workPlace.organisation && complaintDetails.workPlace.organisation.category">
+              <span
+                *ngIf="getTranslationKey(complaintDetails.workPlace.organisation.category);else notranslation">{{ getTranslationKey(complaintDetails.workPlace.organisation.category) | translate }}</span>
+              <ng-template #notranslation>{{complaintDetails.workPlace.organisation.category}} </ng-template>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <!-- <div class="title" *ngIf="complaintDetails.workPlace.organisation.category!= 'miscellaneous'">
+              {{'DETAIL_COMPLAINANT.ORGANISATION' | translate}}</div> -->
+            <div class="title"
+              *ngIf="complaintDetails.workPlace.organisation.category== 'dwelling place or house' ; else other">
+              {{'COMPLAINANT.ADDRESS' | translate}}</div>
+            <ng-template #other>
+              <div class="title">{{'DETAIL_COMPLAINANT.ORGANISATION' | translate}}</div>
+            </ng-template>
+            <div class="text">
+
+              <div *ngIf="complaintDetails.workPlace.organisation.name">{{complaintDetails.workPlace.organisation.name}}
+                <br />
+              </div>
+              <div *ngIf="complaintDetails.workPlace.organisation.address">
+                {{complaintDetails.workPlace.organisation.address}}
+                {{complaintDetails.workPlace.organisation.pinCode}}
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-6 col-lg-6 part1" *ngIf="complaintDetails.workPlace.organisation.unit">
+            <div class="title">{{'DETAIL_COMPLAINANT.WORKPLACE_UNIT' | translate}}</div>
+            <div class="text">
+              <div *ngIf="complaintDetails.workPlace.organisation.unit">
+                {{complaintDetails.workPlace.organisation.unit.name | titlecase }}</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part1" *ngIf="complaintDetails.workPlace.organisation.unit">
+            <div class="title">{{'DETAIL_COMPLAINANT.UNIT_HEAD' | translate}}</div>
+            <div class="text">{{complaintDetails.workPlace.organisation.unit.head.name | titlecase }}</div>
+
+          </div>
+          <div class="col-md-6 col-lg-6 part1" *ngIf="complaintDetails.workPlace.organisation.unit">
+            <div class="title">{{'DETAIL_COMPLAINANT.ICC_STATUS' | translate}}</div>
+            <div class="text">
+
+              <div *ngIf="complaintDetails.workPlace.organisation.unit.iccStatus;else icc_no">
+                {{'DETAIL_COMPLAINANT.YES' | translate}}
+              </div>
+
+              <ng-template #icc_no>{{'DETAIL_COMPLAINANT.NO' | translate}}
+              </ng-template>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 " *ngIf="complaintDetails.workPlace.organisation.unit">
+            <div class="title">{{'DETAIL_COMPLAINANT.ICC_CHAIRPERSON' | translate}}</div>
+            <div class="text">{{complaintDetails.workPlace.organisation.unit.iccChairperson  | titlecase }}</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row-head">{{'DETAIL_COMPLAINANT.INCIDENT_DETAILS' | translate}}
+        </div>
+        <div *ngFor="let complaint of complaintData ; let i = index;" class="parent-layout">
+          <div class="col-md-12 col-lg-12 row-head">{{'DETAIL_COMPLAINANT.INCIDENT_1' | translate}} {{i+1}}
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.DATE_TIME' | translate}}</div>
+            <div class="text">{{complaint.date |date: 'MM/dd/yyyy'}} -{{complaint.time}} </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.LOCATION' | translate}}</div>
+            <div class="text">{{complaint.location | titlecase }}</div>
+
+          </div>
+          <div class="col-md-12 col-lg-12 part1">
+            <div class="title">{{'DETAIL_COMPLAINANT.DESCRIPTION' | translate}}</div>
+            <div class="text description-text">{{complaint.description}}</div>
+
+          </div>
+          <div class="col-md-12 col-lg-12 part1" *ngIf="complaint.lateReason">
+            <div class="title">{{'DETAIL_COMPLAINANT.REASON' | translate}}</div>
+            <div class="text description-text">{{complaint.lateReason}}</div>
+
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row-head" *ngIf="complaintDetails.expectedAction">
+          {{'COMPLAINANT.EXPECTEDACTION' | translate}}
+        </div>
+        <div class="col-md-12 col-lg-12" *ngIf="complaintDetails.expectedAction">
+          <div class="text">{{complaintDetails.expectedAction }}</div>
+        </div>
+
+
+
+        <div class="col-md-12 col-lg-12 row-head" *ngIf="complaintDetails.transfer!=''">
+          {{'DETAIL_COMPLAINANT.TRANSFER_DETAILS' | translate}} &nbsp;
+          <button type="button" class="text-lg-left" *ngIf="showTransfer == true; else hideTransfer"
+            (click)="toggle()">-</button>
+          <ng-template #hideTransfer>
+            <button type="button" class="text-lg-left" (click)="toggle()"> +</button>
+          </ng-template>
+
+          <!-- <img src="./../../../../../assets/icons/Collapse.svg" (click)=toggle()> -->
+        </div>
+        <div class="row" *ngIf="showTransfer == true">
+          <div *ngFor="let transfer of complaintDetails.transfer ; let i = index;" class="parent-layout">
+            <div class="col-md-12 col-lg-12 row-head">
+              {{'DETAIL_COMPLAINANT.TRANSFER' | translate}} {{i+1}}
+            </div>
+            <div class="col-md-6 col-lg-6 part1">
+              <div class="title">{{'DETAIL_COMPLAINANT.DATE_TIME' | translate}}</div>
+              <div class="text">{{transfer.date |date: 'MM/dd/yyyy'}} - {{transfer.date |date: 'h:mm a'}} </div>
+            </div>
+            <div class="col-md-6 col-lg-6 part1">
+              <div class="title">{{'DETAIL_COMPLAINANT.TRANSFERER' | translate}}</div>
+              <div class="text">{{transfer.user.name | titlecase }} ({{transfer.user.category | uppercase }})</div>
+
+            </div>
+            <div class="col-md-12 col-lg-12 part1">
+              <div class="title">{{'DETAIL_COMPLAINANT.REASON' | translate}}</div>
+              <div class="text description-text">{{transfer.reason}}</div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="col-md-12 col-lg-12 row-head">
+          {{'DETAIL_COMPLAINANT.ATTACHMENTS' | translate}}
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div *ngIf="complaintDetails.governmentId">
+            <div class="title">{{'DETAIL_COMPLAINANT.COMPLAINANT_GOVT_ID' | translate}} </div>
+            <div class="text">
+              <div class="margin-left padding-left">
+                <span>
+                  <button *ngIf="complaintDetails.governmentId"
+                    (click)="downloadFile(relUrl,complaintDetails.governmentId)" class="btn-link">
+                    <div *ngIf="complaintDetails.governmentId.indexOf('jpg') > -1 || complaintDetails.governmentId.indexOf('jpeg') > -1 || 
+                      complaintDetails.governmentId.indexOf('png') > -1 || complaintDetails.governmentId.indexOf('PNG') > -1 ||
+                       complaintDetails.governmentId.indexOf('JPEG') > -1">
+                      <!-- <img class="img1" src="../../../../../assets/images/ID-Card.png"> -->
+                      <img class="img1" src="{{relUrl}}/{{complaintDetails.governmentId}}">
+                    </div>
+                    <div *ngIf="complaintDetails.governmentId.indexOf('docx') > -1 || complaintDetails.governmentId.indexOf('doc') > -1 || 
+                        complaintDetails.governmentId.indexOf('pdf') > -1 "><img class="img1"
+                        src="../../../../../assets/images/Uploaded.png"></div>
+                  </button>
+                  <!-- <a (click)="downloadFile(relUrl,complaintDetails.governmentId)"><img class="img1"
+                      src="../../../../../assets/images/ID-Card.png"></a> -->
+                  <!-- <img class="img1" (click)="loadImage('governmentId')"    src="../../../../../assets/images/ID-Card.png"> -->
+                  <!-- <img (click)="loadImage(relUrl+'/'+complaintDetails.governmentId)" class="img1"
+                    src="../../../../../assets/images/ID-Card.png"> -->
+                  <!-- </a> -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-6 part1">
+          <div *ngIf="complaintDetails.writtenComplaint">
+            <div class="title">{{'DETAIL_COMPLAINANT.WRITTEN_COMPLAINT' | translate}}</div>
+            <div class="text">
+              <div class="margin-left padding-left">
+                <span>
+                  <button *ngIf="complaintDetails.writtenComplaint"
+                    (click)="downloadFile(relUrl,complaintDetails.writtenComplaint)" class="btn-link">
+                    <!-- <img  class="img1" src="../../../../../assets/images/Uploaded.png"> -->
+                    <div *ngIf="complaintDetails.writtenComplaint.indexOf('jpg') > -1 || complaintDetails.writtenComplaint.indexOf('jpeg') > -1 || 
+                      complaintDetails.writtenComplaint.indexOf('png') > -1 || complaintDetails.writtenComplaint.indexOf('PNG') > -1 ||
+                       complaintDetails.writtenComplaint.indexOf('JPEG') > -1">
+                      <!-- <img class="img1" src="../../../../../assets/images/ID-Card.png"> -->
+                      <img class="img1" src="{{relUrl}}/{{complaintDetails.writtenComplaint}}">
+                    </div>
+                    <div *ngIf="complaintDetails.writtenComplaint.indexOf('docx') > -1 || complaintDetails.writtenComplaint.indexOf('doc') > -1 || 
+                        complaintDetails.writtenComplaint.indexOf('pdf') > -1 "><img class="img1"
+                        src="../../../../../assets/images/Uploaded.png"></div>
+                  </button>
+                  <!-- <a href="{{relUrl}}/{{complaintDetails.writtenComplaint}}" target="_blank">
+                    <img class="img1" src="../../../../../assets/images/Uploaded.png">
+                  </a> -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-6 part1">
+          <div *ngIf=" complaintDetails.self == false">
+            <div class="title">{{'DETAIL_COMPLAINANT.REPRESENTATIVE_GOVT_ID' | translate}}</div>
+            <div class="text">
+              <div class="margin-left padding-left">
+                <span>
+
+                  <button *ngIf="complaintDetails.complainant && complaintDetails.complainant.governmentId"
+                    (click)="downloadFile(relUrl,complaintDetails.complainant.governmentId)" class="btn-link">
+                    <div *ngIf="complaintDetails.complainant.governmentId.indexOf('jpg') > -1 || complaintDetails.complainant.governmentId.indexOf('jpeg') > -1 || 
+                          complaintDetails.complainant.governmentId.indexOf('png') > -1 || complaintDetails.complainant.governmentId.indexOf('PNG') > -1 ||
+                           complaintDetails.complainant.governmentId.indexOf('JPEG') > -1">
+                      <!-- <img class="img1" src="../../../../../assets/images/ID-Card.png"> -->
+                      <img class="img1" src="{{relUrl}}/{{complaintDetails.complainant.governmentId}}">
+                    </div>
+                    <div *ngIf="complaintDetails.complainant.governmentId.indexOf('docx') > -1 || complaintDetails.complainant.governmentId.indexOf('doc') > -1 || 
+                            complaintDetails.complainant.governmentId.indexOf('pdf') > -1 "><img class="img1"
+                        src="../../../../../assets/images/Uploaded.png"></div>
+
+                    <!-- <img class="img1" src="../../../../../assets/images/ID-Card.png">   -->
+                  </button>
+                  <!-- <a href="{{relUrl}}/{{complaintDetails.complainant.governmentId}}" target="_blank">
+                    <img class="img1" src="../../../../../assets/images/ID-Card.png">
+                  </a> -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div *ngIf=" complaintDetails.self == false">
+            <div class="title">{{'DETAIL_COMPLAINANT.REPRESENTATIVE_CONSENT' | translate}}</div>
+            <div class="text">
+              <div class="margin-left padding-left">
+                <span>
+                  <button *ngIf="complaintDetails.complainant && complaintDetails.complainant.consent"
+                    (click)="downloadFile(relUrl,complaintDetails.complainant.consent)" class="btn-link">
+                    <div *ngIf="complaintDetails.complainant.consent.indexOf('jpg') > -1 || complaintDetails.complainant.consent.indexOf('jpeg') > -1 || 
+                          complaintDetails.complainant.consent.indexOf('png') > -1 || complaintDetails.complainant.consent.indexOf('PNG') > -1 ||
+                           complaintDetails.complainant.consent.indexOf('JPEG') > -1">
+                      <!-- <img class="img1" src="../../../../../assets/images/ID-Card.png"> -->
+                      <img class="img1" src="{{relUrl}}/{{complaintDetails.complainant.consent}}">
+                    </div>
+                    <div *ngIf="complaintDetails.complainant.consent.indexOf('docx') > -1 || complaintDetails.complainant.consent.indexOf('doc') > -1 || 
+                            complaintDetails.complainant.consent.indexOf('pdf') > -1"><img class="img1"
+                        src="../../../../../assets/images/Uploaded.png"></div>
+                    <!-- <img class="img1" target="_blank" src="../../../../../assets/images/Uploaded.png"> -->
+                  </button>
+                  <!-- <a href="{{relUrl}}/{{complaintDetails.complainant.consent}}" target="_blank">
+                    <img class="img1" target="_blank" src="../../../../../assets/images/Uploaded.png">
+                  </a> -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="m-auto">
+
+      <button type="button"
+        *ngIf="((complaintDetails.status =='disposed' && userCategory=='do' && !complaintDetails.doSubmitted) || (complaintDetails.status =='disposed' && userCategory=='employer' && !complaintDetails.employerSubmitted) || complaintDetails.status =='In-Progress'); else disposedbackbutton"
+        class="btn" [routerLink]="['/complaints']">{{'BUTTON.BACK' | translate}}</button>
+      <ng-template #disposedbackbutton>
+        <button type="button" class="btn" [routerLink]="['/complaints/disposed']">{{'BUTTON.BACK' | translate}}</button>
+      </ng-template>
+      &nbsp;&nbsp;&nbsp;
+      <!-- <button type="button"
+        *ngIf="complaintDetails.status =='In-Progress' && userCategory == 'lcc' && 
+        complaintDetails.workPlace && complaintDetails.workPlace.organisation && 
+        complaintDetails.workPlace.organisation.unit && complaintDetails.workPlace.organisation.unit.iccStatus == true  && complaintDetails.workPlace.organisation.category!= 'dwelling place or house'"
+        class="btn" (click)="open(content)"> -->
+        <a type="button"
+        *ngIf="complaintDetails.status =='In-Progress' && userCategory == 'lcc' && !complaintDetails.respondentEmployer"
+        class="btn" [routerLink]="['/complaints/transfer/'+complaintId]">
+        {{'BUTTON.TRANSFER_TO_ICC' | translate}}</a> &nbsp;&nbsp;&nbsp;
+      <button type="button" *ngIf="complaintDetails.status =='In-Progress' &&  userCategory == 'icc' " class="btn"
+        (click)="open(content)">{{'BUTTON.TRANSFER_TO_LCC' | translate}}</button> &nbsp;&nbsp;&nbsp;
+      <button type="button"
+        *ngIf="complaintDetails.status !='In-Progress' || userCategory == 'lcc' || userCategory == 'icc' " class="btn"
+        (click)="disposeData(userCategory)">{{'BUTTON.NEXT' | translate}}</button>
+
+    </div>
+  </div>
+
+  <!--
+    <div class="row">
+      <div  *ngIf="complaintDetails.status =='In-Progress' && (userCategory == 'lcc' || userCategory == 'icc') ">
+          <button class="btn" (click)="transferComplain(userCategory)">Transfer</button>
+        </div>
+  <div  *ngIf="complaintDetails.status !='In-Progress' || userCategory == 'lcc' || userCategory == 'icc' ">
+    <button class="btn" (click)="disposeData(userCategory)">{{'BUTTON.NEXT' | translate}}</button>
+  </div>
+  </div>
+-->
+
+
+</div>
+
+<div class="margin-bottom" *ngIf="dispose == true">
+
+
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4  text-left">
+      <span class="step">{{'DETAIL_COMPLAINANT.STEP_2_2' | translate}} </span>
+      <span class="step-desc"
+        *ngIf="(userCategory=='icc' || userCategory == 'lcc') && complaintDetails.status !='disposed';else recommendation">
+        {{'DETAIL_COMPLAINANT.DISPOSE_COMPLAINT' | translate}}
+      </span>
+
+      <ng-template #recommendation>
+        <span class="step-desc">{{'DETAIL_COMPLAINANT.RECOMMENDATION' | translate}}</span>
+      </ng-template>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{complaintId}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <alert></alert>
+  </div>
+  <div class="row" *ngIf="!disposalDetails ; else disposed_data">
+    <div class="col-sm-2 col-md-2 col-lg-2 part1">
+      &nbsp;
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 m-auto form part1">
+      <form [formGroup]="disposeForm">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="summary">{{'DETAIL_COMPLAINANT.COMPLAINT_SUMMARY' | translate}} *</label>
+              <textarea formControlName="summary" cols="10" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="summary">{{'DETAIL_COMPLAINANT.RECOMMENDATIONS_EMP' | translate}}</label>
+              <textarea formControlName="recommendation" cols="10" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="col-md-6 ">
+
+            <div class="form-group">
+              <label for="Type">{{'DETAIL_COMPLAINANT.DISPOSAL_TYPE' | translate}} *</label>
+              <select formControlName="type" class="form-control" id="userSubCategory" (change)="validateType()">
+                <option value="">{{'DETAIL_COMPLAINANT.SELECT_ONE' | translate}}</option>
+                <option value="settlement">{{'DETAIL_COMPLAINANT.SETTLEMENT' | translate}}</option>
+                <option value="settlement with recommendation">
+                  {{'DETAIL_COMPLAINANT.SETTLEMENT_RECOMMENDATIONS' | translate}}</option>
+                <option value="complaint forwarded to Police">{{'DETAIL_COMPLAINANT.COMPLAINT_FWD_POLICE' | translate}}
+                </option>
+                <option value="other">{{'DETAIL_COMPLAINANT.ANY_OTHER' | translate}}</option>
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" *ngIf="otherType">
+              <label for="summary">{{'DETAIL_COMPLAINANT.OTHER' | translate}}*</label>
+              <textarea formControlName="other" cols="10" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="col-md-12"
+            *ngIf="(userCategory=='icc' || userCategory == 'lcc') && complaintDetails.status !='disposed'">
+            <button type="button" class="btn" (click)="backToStep(1)">{{'BUTTON.BACK' | translate}}</button> &nbsp;
+            &nbsp;
+            <button type="button" class="btn" type="submit"
+              (click)="disposeComplaint()">{{'DETAIL_COMPLAINANT.DISPOSE' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2 part1">
+      <div class=" mandatory text-right">
+          * {{'COMMON.MANDATORY' | translate}}       </div>
+    </div>
+  </div>
+  <ng-template #disposed_data>
+    <div class="col-sm-8 col-md-8 col-lg-8 m-auto ">
+      <div class="row">
+        <div class="col-md-12 ">
+
+          <div class="row-head text-left">{{'DETAIL_COMPLAINANT.DISPOSAL_TYPE' | translate}}</div>
+          <div class="text">{{disposalDetails.type}}</div>
+          <div class="text" *ngIf="otherType">{{disposalDetails.other}}</div>
+        </div>
+
+        <div class="col-md-12">
+
+          <div class="row-head text-left">{{'DETAIL_COMPLAINANT.COMPLAINT_SUMMARY' | translate}}</div>
+          <div class="text">{{disposalDetails.summary}}</div>
+
+        </div>
+        <div class="col-md-12">
+
+          <div class="row-head text-left">{{'DETAIL_COMPLAINANT.RECOMMENDATION' | translate}}</div>
+          <div class="text">{{disposalDetails.recommendation}}</div>
+
+
+        </div>
+
+        <div class="col-md-12"
+          *ngIf="(userCategory=='icc' || userCategory == 'lcc') && complaintDetails.status !='disposed'">
+          <button type="button" class="btn" (click)="backToStep(1)">{{'BUTTON.BACK' | translate}}</button> &nbsp; &nbsp;
+          <button type="button" class="btn" type="submit"
+            (click)="disposeComplaint()">{{'DETAIL_COMPLAINANT.DISPOSE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+  <div class="row" *ngIf=" complaintDetails.status =='disposed' ">
+    <div class="m-auto">
+      <button type="button" class="btn" (click)="backToStep(1)">{{'BUTTON.BACK' | translate}}</button> &nbsp; &nbsp;
+      <button type="button" class="btn" (click)="addComment(userCategory)">{{'BUTTON.NEXT' | translate}}</button></div>
+  </div>
+</div>
+<div class="margin-bottom row" *ngIf="addCommentData == true">
+
+
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4 text-left ">
+      <span class="step">{{'DETAIL_COMPLAINANT.STEP_3_3' | translate}} </span>
+      <span class="step-desc">{{'DETAIL_COMPLAINANT.DISPOSE_COMPLAINT' | translate}}</span>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{complaintId}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <alert></alert>
+  </div>
+  <div class="col-sm-2 col-md-2 col-lg-2 part1">
+    &nbsp;
+  </div>
+  <div class="col-sm-8 col-md-8 col-lg-8 m-auto form part1">
+    <form [formGroup]="addCommentForm">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="nature">{{'DETAIL_COMPLAINANT.NATURE' | translate}} *</label>
+            <textarea formControlName="nature" cols="10" rows="4"></textarea>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="action">{{'DETAIL_COMPLAINANT.ACTION' | translate}} </label>
+            <textarea formControlName="action" cols="10" rows="4"></textarea>
+          </div>
+        </div>
+
+        <div class="col-md-12 text-center" *ngIf="complaintDetails.status =='disposed'">
+          <!-- <button type="button" *ngIf="complaintDetails.employerSubmitted || complaintDetails.doSubmitted " class="btn"
+            (click)="backToStep(2)">{{'BUTTON.BACK' | translate}}</button> -->
+          <button type="button" class="btn" (click)="backToStep(2)">{{'BUTTON.BACK' | translate}}</button>
+          &nbsp; &nbsp;
+          <!-- <button
+            *ngIf="(userCategory=='do' || userCategory == 'employer') && !complaintDetails.employerSubmitted && !complaintDetails.doSubmitted "
+            class="btn" type="submit"
+            (click)="postCommentData()">{{'DETAIL_COMPLAINANT.ADD_COMMENT' | translate}}</button> -->
+
+          <button type="button"
+            *ngIf="((userCategory=='do' && complaintDetails.complaintViewer == 'do'  && !complaintDetails.doSubmitted ) ||( userCategory == 'employer' && complaintDetails.complaintViewer == 'employer' && !complaintDetails.employerSubmitted ) )"
+            class="btn" type="submit"
+            (click)="postCommentData()">{{'DETAIL_COMPLAINANT.SUBMIT' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-2 col-md-2 col-lg-2 part1">
+    <div class=" mandatory text-right">
+          * {{'COMMON.MANDATORY' | translate}} 
+    </div>
+  </div>
+</div>
+<div class="col-lg-12">
+  <ng-template #content let-modal>
+    <form [formGroup]="transferForm">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="transferSuccess == false">
+          <!-- {{'DETAIL_COMPLAINANT.CONFIRM_TRANSFER_MESSAGE' | translate}}  -->
+
+          <div class="form-group">
+            <label for="nature">{{'DETAIL_COMPLAINANT.REASON_FOR_TRANSFER' | translate}} *</label>
+            <textarea formControlName="reason" cols="10" rows="4" class="form-control " [ngClass]="{
+          'is-invalid': transferSubmitted == true && transferForm.controls.reason.errors}"></textarea>
+            <div *ngIf="transferSubmitted == true && transferForm.controls.reason.errors" class="invalid-feedback">
+              {{'DETAIL_COMPLAINANT.REASON_REQUIRED' | translate}}</div>
+          </div>
+
+        </div>
+        <div *ngIf="transferSuccess == true">{{'DETAIL_COMPLAINANT.TRANSFER_SUCCESS' | translate}}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" *ngIf="transferSuccess == false" class="btn btn-outline-dark"
+          (click)="transferComplaint()">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</button> &nbsp; &nbsp;
+        <!-- <button type="button" *ngIf="transferSuccess == false" class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">{{'DETAIL_COMPLAINANT.NO'  | translate}}</button> -->
+        <button type="button" *ngIf="transferSuccess == true" class="btn btn-outline-dark"
+          (click)="confirmationClose()">{{'DETAIL_COMPLAINANT.OK' | translate}}</button>
+      </div>
+    </form>
+  </ng-template>
+</div>

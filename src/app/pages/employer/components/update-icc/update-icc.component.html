@@ -1,0 +1,139 @@
+<div class="row main-content">
+    <div class="col-sm-12 row form-header">
+      <div class="col-sm-12  text-center">
+          Update Details
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <alert></alert>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2 part1">
+        
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 m-auto form" *ngIf = "loadFormData == true">
+      <form [formGroup]="addIccForm">
+        <div class="row">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="userSubCategory">Type of ICC Member*</label>
+              <input type="text" formControlName="userSubCategory" disabled class="form-control" id="userSubCategory" 
+              readonly = "readonly">
+               
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender*</label>
+              <!-- <select formControlName="gender" class="form-control" id="gender" ng-readonly="readonly : readOnlyField.gender==true"> -->
+                  <input type="text" formControlName="gender" class="form-control" id="gender" disabled readonly="readonly">
+                
+            </div>
+            <div class="form-group">
+              <label for="unitHeadMobile">Mobile Number*</label>
+           
+              <input type="text" formControlName="mobileNumber" [readonly]="iccData.status=='active'?true:false" class="form-control" id="unitHeadMobile" pattern="[0-9]*" maxlength="10" minlength="10"[ngClass]="{
+                'is-invalid': submitted == true && addIccForm.controls.mobileNumber.errors}" >
+              <div *ngIf="submitted == true && addIccForm.controls.mobileNumber.errors && addIccForm.controls.mobileNumber.errors.required"
+                  class="invalid-feedback">
+                  Please enter mobile Number
+                </div>
+                <div *ngIf="submitted == true && addIccForm.controls.mobileNumber.errors && addIccForm.controls.mobileNumber.errors.minlength"
+            class="invalid-feedback">
+            Please enter valid Mobile Number
+          </div>
+            </div>
+            <div class="form-group">
+              <label for="department">Department*</label>
+              <input type="text" formControlName="department" class="form-control" id="department" placeholder="" [ngClass]="{
+                'is-invalid': submitted == true && addIccForm.controls.department.errors && addIccForm.controls.department.errors.required}" >
+              <div *ngIf="submitted == true && addIccForm.controls.department.errors && addIccForm.controls.department.errors.required"
+                  class="invalid-feedback">
+                  Please enter department
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="dateOfNomination">Date of Nomination*</label>
+              <!-- <input type="text" formControlName="dateOfNomination" class="form-control" id="dateOfNomination"
+                placeholder=""> -->
+                <!-- <ng-datepicker [(ngModel)]="dateOfNomination" [options]="options"></ng-datepicker> -->
+                <div class="datepicker-container">
+                    <ng-datepicker  class="form-control"  formControlName="dateOfNomination" [options]="options" position="top-left"></ng-datepicker>
+                  </div>
+            </div>
+  
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="name">Name*</label>
+              <input type="text" formControlName="name" class="form-control" id="name" placeholder=" " [ngClass]="{
+                'is-invalid': submitted == true && addIccForm.controls.name.errors && addIccForm.controls.name.errors.required}" >
+              <div *ngIf="submitted == true && addIccForm.controls.name.errors && addIccForm.controls.name.errors.required"
+                  class="invalid-feedback">
+                  Please enter name
+                </div>
+  
+              <!-- <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Please enter your name.
+                    </div>
+                </div> -->
+            </div>
+  
+            <div class="form-group">
+              <label for="unitHeadEmail">Email*</label>
+              <input type="text" formControlName="emailId" id="emailId" [readonly]="iccData.status=='active'?true:false" class="form-control" [ngClass]="{
+                'is-invalid': submitted == true && addIccForm.controls.emailId.errors && addIccForm.controls.emailId.errors.required}" >
+              <div *ngIf="submitted == true && addIccForm.controls.emailId.errors && addIccForm.controls.emailId.errors.required"
+                  class="invalid-feedback">
+                  Please enter emailId
+                </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="organisationName">Organisation*</label>
+              <input type="text" formControlName="organisationName" [readonly] = "iccData.user.subCategory=='ngo'?false:true " id="organisationName" class="form-control" [ngClass]="{
+                'is-invalid': submitted == true && addIccForm.controls.organisationName.errors && addIccForm.controls.organisationName.errors.required}" >
+              <div *ngIf="submitted == true && addIccForm.controls.organisationName.errors && addIccForm.controls.organisationName.errors.required"
+                  class="invalid-feedback">
+                  Please enter organization Name
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="designation">Designation*</label>
+              <input type="text" formControlName="designation" id="designation" class="form-control" [ngClass]="{
+                'is-invalid': submitted == true && addIccForm.controls.designation.errors && addIccForm.controls.designation.errors.required}" >
+              <div *ngIf="submitted == true && addIccForm.controls.designation.errors && addIccForm.controls.designation.errors.required"
+                  class="invalid-feedback">
+                  Please enter designation
+                </div>
+              
+            </div>
+            <div class="form-group">
+              <label for="address">Relevant Skills / Trainings / Experience*</label>
+  
+              <textarea formControlName="experience" class="form-control" id="experience"
+                rows="5" cols="5" [ngClass]="{'is-invalid': submitted == true && addIccForm.controls.experience.errors && addIccForm.controls.experience.errors.required}" >  </textarea>
+                                              <div *ngIf="submitted == true && addIccForm.controls.experience.errors && addIccForm.controls.experience.errors.required"
+                    class="invalid-feedback">
+                    Please enter experience
+                  </div>
+              <!-- <input type="text" formControlName="address" class="form-control" id="address" placeholder="address"> -->
+            </div>
+          </div>
+  
+        </div>
+  
+  
+        <div class="col-md-12 col-lg-12 ">
+          <div class="submit">  
+              <button type="button" class="btn btn-primary round" [routerLink]="['/employer/icc']">Back</button> &nbsp; &nbsp;    
+            <button type="submit" class="btn btn-primary round" (click)="updateIccMembers(iccData._id)">Submit</button>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2 part1">
+        <div class=" mandatory text-right">
+            * {{'COMMON.MANDATORY' | translate}} 
+          </div>
+    </div>
+  </div>
+  

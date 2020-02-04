@@ -1,0 +1,7 @@
+{
+  "name": "shor-ui",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

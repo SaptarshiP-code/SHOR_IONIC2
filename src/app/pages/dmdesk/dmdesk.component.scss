@@ -1,0 +1,60 @@
+@import '../../scss/common.scss';
+
+
+.title {
+    text-align: center;
+}
+.form-header {
+    background-color: #ebf0ff;
+    text-align: center;
+    color: #424242;
+    padding: 5px 3%;
+    font-size: 20px;
+    -webkit-text-decoration: none solid #424242;
+    text-decoration: none solid #424242;
+}
+.m-bottom {
+    margin-bottom: 3% !important;
+}
+.note {
+    margin-top: 6%;
+    text-align: justify;
+}
+.note-toolbar {
+    background: #891199;
+    border-radius: 8px 8px 0px 0px;
+    height: 40px;
+}
+.note-content {
+    background: white;
+    /* text-align: center; */
+    padding: 7%;
+    align-items: center;
+    border: 1px solid #424242;
+}
+
+.note-title {
+    font-size: 17px;
+    font-style: italic;
+    text-align: center !important;
+    margin-left: 11%;
+}
+p {
+    font-size: 14px;
+    font-style: italic;
+}
+.notep {
+    margin-top: 3%;
+}
+.row {
+    margin: 0!important;
+}
+.tab-list button {
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: #891199;
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none solid rgb(255, 255, 255);
+    text-align: center;
+    }

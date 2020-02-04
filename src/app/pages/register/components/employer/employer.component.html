@@ -1,0 +1,444 @@
+<div class="row " *ngIf="stepNumber == 1">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4  ">
+      <span class="step">{{'EMPLOYER_REGISTRATION.STEP_1_3' | translate}} </span>
+      <span class="step-desc">{{'EMPLOYER_REGISTRATION.STEP_1_HEAD' | translate}}</span>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{'EMPLOYER_REGISTRATION.STEP_1_TITLE' | translate}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+</div>
+<div class="row " *ngIf="stepNumber == 2">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4  ">
+      <span class="step">{{'EMPLOYER_REGISTRATION.STEP_2_3' | translate}} </span>
+      <span class="step-desc">{{'EMPLOYER_REGISTRATION.STEP_2_HEAD' | translate}}</span>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{'EMPLOYER_REGISTRATION.STEP_2_TITLE' | translate}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+</div>
+<div class="row " *ngIf="stepNumber == 3">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4  ">
+      <span class="step">{{'EMPLOYER_REGISTRATION.STEP_3_3' | translate}} </span>
+      <span class="step-desc">{{'EMPLOYER_REGISTRATION.STEP_3_HEAD' | translate}}</span>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{'EMPLOYER_REGISTRATION.STEP_3_TITLE' | translate}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+</div>
+<div class="col-sm-12">
+  <alert></alert>
+</div>
+<form class="form mt-4" [formGroup]="regiterEmployerForm">
+  <div class=" mandatory text-right">
+    * {{'COMMON.MANDATORY' | translate}}
+  </div>
+  <div class=" " *ngIf="stepNumber == 1">
+    <div class="row ">
+      <div class="col-sm-12 col-md-8 col-lg-8 m-auto form">
+        <div class="col-md-4 col-lg-6 part1">
+          <div class="form-group ">
+            <label> {{'Workplace Category' | translate}} *</label>
+            <select class="form-control text-box" id="workPlaceCategory" formControlName="orgCategory"
+              (change)="changeCategory($event.target.value)">
+              <option value="">Please Select One</option>
+              <option *ngFor="let cat of workPlaceCategory;let i = index" [value]="cat.id">
+                {{ cat.name |titlecase}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-6 part1" *ngIf="!HideSubCategory">
+          <div class="form-group ">
+            <label> {{'Organisation Sub-Category' | translate}} </label>
+            <select class="form-control text-box" id="workPlaceCategory" formControlName="orgSubCategory">
+              <option value="">Please Select One</option>
+              <option *ngFor="
+              let subCat of SubCategoryOrganization;
+              let i = index
+            " [value]="subCat.id">
+                {{ subCat.name |titlecase}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-6 part1">
+          <div class="form-group">
+            <label>{{'COMPLAINANT.SEARCH_YOUR_ORGANISATION' | translate}} *</label>
+            <input class="form-control text-box orgsearch" type="text"
+              [readOnly]="regiterEmployerForm.controls.orgCategory.status == 'INVALID'" (change)="getOrganization()"
+              placeholder="Search by Organisation Name" formControlName="pattern" value="" />
+            <img class="search-icon" src="assets/images/Search@2.png">
+            <br />
+            <br />
+            <h5 class="mt2"><a [routerLink]="['/organisation-registration']" class="add_text" style="    right: 0px;
+              bottom: 0px;
+              font-size: 15px;">Can't find your Organization? Click Here</a></h5>
+          </div>
+        </div>
+        <!-- <div class="col-sm-12 col-md-4 col-lg-6 m-auto form">
+        <div class="col-md-4 col-lg-6 part1">
+          <h5 class="mt2"><a [routerLink]="['/organisation-registration']" class="add_text" style="    right: 0px;
+            bottom: 4px;
+            font-size: 15px;">Can't find your Organization? Click Here</a></h5>
+        </div>
+      </div> -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-8 m-auto form ">
+        <!-- <div *ngIf="organizationData "> -->
+        <div *ngIf="organizationData?.length> 0 && showOrgTable == true">
+          <!-- <div *ngIf="regf.orgunit.errors && regf.orgunit.errors.required" class="alert alert-danger">Please select organization</div> -->
+          <label> {{'COMPLAINANT.SELECT_YOUR_ORGANISATION' | translate}} *</label>
+          <table class="table table-striped" [mfData]="organizationData" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead>
+              <tr>
+                <th style="width: 25%">
+                  <mfDefaultSorter by="orgName">
+                    Organisations</mfDefaultSorter>
+                </th>
+                <th style="width: 65%">
+                  <mfDefaultSorter by="orgAddress">Address</mfDefaultSorter>
+                </th>
+                <!-- <th>
+              <mfDefaultSorter by="totalEmp">No. of Emp</mfDefaultSorter>
+            </th> -->
+                <th>Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let organizations of mf.data">
+                <td *ngIf="organizations.status==false">{{ organizations.orgName }}
+
+                </td>
+                <td *ngIf="organizations.status==false">{{ organizations.orgAddress }}</td>
+                <!-- <td>{{ organizations.totalEmp }}</td> -->
+                <td *ngIf="organizations.status==false">
+                  <input type="radio" formControlName="orgunit" [value]="organizations._id"
+                    (click)="getOrgDetails(organizations)" />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3">
+                  <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div class="col-md-12 col-lg-12">
+            <div class="form-group submit">
+
+              <button type="button" class="btn" (click)="goToStep(2)">Next</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="organizationData?.length== 0  && showOrgTable == true">
+          No Record Found
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row " *ngIf="stepNumber == 2">
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <div class="helpText" *ngIf="showHelpText">
+        <div class="closebtn">
+          <a href="javascript:void()" class="btn-text" (click)="onCloseToggle()">X</a></div>
+        <div class="helpTitle">
+          {{'COMMON.NEED_HELP' | translate}}
+        </div>
+        <div class="helpBody">
+          <ul><b>Use any registration number unique to your organization. </b>
+            <p>Example: Registration Number, TAN, CIN, GST, Udyog Aadhar Number, IFSC, Factory License Number,
+              Affiliation Number or any other Unique ID.
+
+            </p>
+          </ul>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 m-auto form">
+      <input type="hidden" formControlName="name" class="form-control text-box" id="name" placeholder="">
+      <!-- <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" readonly formControlName="name" class="form-control text-box" id="name" placeholder=""
+          [ngClass]="{
+                    'is-invalid': stepOneSumbitted && regf.name.errors
+                  }" />
+        <div *ngIf="emailVeficationSubmitted && regf.name.errors" class="invalid-feedback">
+          <div *ngIf="regf.name.errors.required">Name is required</div>
+        </div>
+      </div> -->
+      <div class="form-group">
+        <label for="name">{{'EMPLOYER_REGISTRATION.ORG_REG_NUMBER' | translate}}*</label>&nbsp;
+        &nbsp;<a href="javascript:void()" class="btn-text"
+          (click)="getHelpToggle()">{{'COMMON.NEED_HELP_TEXT' | translate}}</a>
+        <!-- (change) = "validateRegistration($event.target.value)" -->
+        <input type="text" formControlName="regNumber" class="form-control text-box"
+          (mouseout)="validateRegistration(0);" (change)="validateRegistration(1)" id="regNumber" placeholder=""
+          [ngClass]="{
+                      'is-invalid': (stepOneSumbitted && regf.regNumber.errors) || validRegNumber== false 
+                    }" />
+        <button type="button" (click)="validateRegistration(1)" class="getOTPlink m-rt10">Validate Organization Unique
+          Id</button>
+        <div *ngIf="validRegNumber == false && showValidationError == 1" class="invalid-feedback">Please enter the valid
+          Organization Unique Id</div>
+        <!-- <div *ngIf=" regf.regNumber.errors && regf.regNumber.errors.required" class="invalid-feedback">Please enter the registration Number</div> -->
+        <div *ngIf="emailVeficationSubmitted && regf.regNumber.errors" class="invalid-feedback">
+          <div *ngIf="validRegNumber == false">Enter correct Organization Unique Id</div>
+          <div *ngIf="regf.regNumber.errors.required">Organization Unique Id is required</div>
+        </div>
+      </div>
+      <div *ngIf="validRegNumber == true">
+        <div class="form-group">
+          <label for="name">{{'EMPLOYER_REGISTRATION.MOBILE' | translate}}*</label>
+          <input type="text" readonly formControlName="mobileNumber" class="form-control text-box" id="mobileNumber"
+            placeholder="" [ngClass]="{
+                        'is-invalid': stepOneSumbitted && regf.mobileNumber.errors
+                      }" />
+          <div class="text-right">
+            <!-- {{mobileOtp}} &nbsp; -->
+            &nbsp;
+            <button type="button" class="getOTPlink m-rt10"
+              (click)="getOTP()">{{'REGISTRATION.GET_OTP' | translate}}</button>
+          </div>
+
+          <div *ngIf="emailVeficationSubmitted && regf.mobileNumber.errors" class="invalid-feedback">
+            <div *ngIf="regf.mobileNumber.errors.required">Mobile Number is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">{{'EMPLOYER_REGISTRATION.MOBILE_OTP' | translate}}*</label>
+          <input type="number" formControlName="mobileOtp" class="form-control text-box" id="mobileOtp" placeholder=""
+            [ngClass]="{
+                          'is-invalid': stepOneSumbitted && regf.mobileOtp.errors
+                        }" />
+          <div *ngIf="stepOneSumbitted && regf.mobileOtp.errors" class="invalid-feedback">
+            <div *ngIf="regf.mobileOtp.errors.required">Mobile OTP is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">{{'EMPLOYER_REGISTRATION.EMAIL' | translate}}*</label>
+          <input type="text" readonly formControlName="emailId" class="form-control text-box" id="emailId"
+            placeholder="" [ngClass]="{
+                            'is-invalid': stepOneSumbitted && regf.emailId.errors
+                          }" />
+          <div class="text-right"><button type="button" class="getOTPlink m-rt10" type="button"
+              (click)="getEmailOTP()">{{'REGISTRATION.SEND_EMAIL_OTP' | translate}}</button>
+            <!-- {{emailOtp}} -->
+          </div>
+          <div *ngIf="emailVeficationSubmitted && regf.emailId.errors" class="invalid-feedback">
+            <div *ngIf="regf.emailId.errors.required">Email Id is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">{{'EMPLOYER_REGISTRATION.EMAIL_OTP' | translate}}</label>
+          <input type="number" formControlName="emailOtp" class="form-control text-box" id="emailOtp" placeholder=""
+            [ngClass]="{
+                              'is-invalid': stepOneSumbitted && regf.emailOtp.errors
+                            }" />
+          <div *ngIf="stepOneSumbitted && regf.emailOtp.errors" class="invalid-feedback">
+            <div *ngIf="regf.emailOtp.errors.required">Email OTP is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">{{'EMPLOYER_REGISTRATION.PASSWORD' | translate}}*</label>&nbsp;&nbsp;
+          <!-- <img src="./../../../../../assets/icons/InfoIcon.svg" tooltipClass="password-tooltip"
+            ngbTooltip="{{'FORGOT_PASSWORD.PASSWORD_POLICY' | translate}}"> -->
+          <button class="getOTPlink m-rt10" tooltipClass="password-tooltip"
+            ngbTooltip="{{'FORGOT_PASSWORD.PASSWORD_POLICY' | translate}}">
+            {{'COMMON.NEED_HELP_TEXT' | translate}}
+          </button>
+          <show-hide-password size="sm" btnStyle="none" [btnOutline]="false">
+            <input type="password" formControlName="password" class="form-control text-box" id="password"
+              placeholder="Enter Password" [ngClass]="{
+                                'is-invalid': stepOneSumbitted && regf.password.errors
+                              }" />
+          </show-hide-password>
+          <div *ngIf="stepOneSumbitted && regf.password.errors" class="error-invalid">
+            <div *ngIf="regf.password.errors.required">Password is required</div>
+            <div *ngIf="regf.password.errors.pattern">Password must contain at least one number and one uppercase and
+              lowercase letter, and at least 8 or more characters.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">{{'EMPLOYER_REGISTRATION.CPASSWORD' | translate}}*</label>
+          <show-hide-password size="sm" btnStyle="none" [btnOutline]="false">
+            <input type="password" formControlName="cpassword" class="form-control text-box" id="cpassword"
+              placeholder="Enter Password" [ngClass]="{
+                                  'is-invalid': stepOneSumbitted && regf.cpassword.errors
+                                }" />
+          </show-hide-password>
+          <div *ngIf="stepOneSumbitted && regf.cpassword.errors" class="error-invalid">
+            <div *ngIf="regf.cpassword.errors.required">Confirm Password Number is required</div>
+            <div *ngIf="regf.cpassword.errors.mustMatch">Passwords must match</div>
+          </div>
+
+        </div>
+
+
+      </div>
+      <div class="form-group row">
+        <button type="button" class="btn"
+          (click)="$event.stopPropagation();backToStep(1)">{{'BUTTON.BACK' | translate}}</button> &nbsp;
+        <!-- (change) = "validateRegistration($event.target.value)" -->
+        <!-- <button class="btn" *ngIf = "!validRegNumber || validRegNumber== false"  (click)="validateRegistration(1)">{{'BUTTON.VALIDATE' | translate}}</button>
+       &nbsp; -->
+        <button type="submit" *ngIf="validRegNumber == true" class="btn btn-primary round"
+          (click)="registerEmployer()">{{'REGISTRATION.SUBMIT' | translate}}</button></div>
+    </div>
+
+  </div>
+</form>
+
+<div class="col-sm-12 col-md-8 col-lg-8 m-auto form" *ngIf="stepNumber == 3">
+  <form [formGroup]="addUnitForm">
+    <input type="hidden" formControlName="emailId" id="emailId" value="" />
+    <input type="hidden" formControlName="organisation" id="organisation" value="" />
+    <input type="hidden" formControlName="regNumber" id="regNumber" value="" />
+    <div formArrayName="unit" *ngFor="let item of addUnitForm.get('unit').controls; let i = index;">
+      <div [formGroupName]="i">
+        <div class="row">
+          <div class="col-12">
+            <div class="text-center">
+              <h4 class="unit-num-title">WORKPLACE UNIT {{i+1}}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="name">Unit Name*</label>
+              <input type="text" formControlName="name" class="form-control text-box h-45" id="unitName" placeholder="" [ngClass]="{
+                'is-invalid': unitFormSubmitted && UnitFormArray.name.errors
+              }">
+            </div>
+            <div class="form-group ">
+              <label>State *</label>
+              <select class="form-control text-box  h-45" formControlName="state" id="workPlaceCategory">
+                <option>
+                  Uttar Pardesh
+                </option>
+              </select>
+            </div>
+            <div class="form-group ">
+              <label>District *</label>
+              <select class="form-control text-box  h-45" formControlName="district" id="workPlaceCategory">
+                <option>
+                  Gautam Buddh Nagar
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="address">Unit Address*</label>
+              <textarea formControlName="address" class="form-control text-box "  id="address" placeholder="" rows="7" cols="5" style="    height: 126px;">ABC Tyres Pvt Ltd NSEZ 
+  
+                                            </textarea>
+              <!-- <input type="text" formControlName="address" class="form-control" id="address" placeholder="address"> -->
+            </div>
+            <div class="form-group">
+              <label for="name">Pin Code*</label>
+              <input type="text" formControlName="pin" class="form-control text-box h-45" id="unitName" placeholder="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group ">
+              <label>Unit Head Same as Employer or Existing Unit Head </label>
+              <select class="form-control text-box h-45" id="workPlaceCategory">
+                <option>
+                  Please Select One
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="name">Unit Head*</label>
+              <input type="text" class="form-control text-box h-45" id="unitName" placeholder="">
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="name">Unit Head's Email*</label>
+              <input type="email" class="form-control text-box h-45" id="unitName" placeholder="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="name">Unit Head's Mobile Number*</label>
+              <input type="text" class="form-control text-box h-45" id="unitName" placeholder="">
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-12 col-lg-12 part1">
+          <div class="form-group">
+            <input type="checkbox" value="1" formControlName="sameAsEmployer"  name="sameAsEmployer"  (click)="setEmployerAsHead()" />Unit Head Same as Employer
+          </div>
+
+        </div> -->
+        <!-- <div class="row" formGroupName="head">
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="unitHead">Unit Head / Supervisor*</label>
+              <input readonly type="text" formControlName="name" class="form-control" id="name" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="unitHeadMobile">Unit Head's Mobile Number*</label>
+              <input readonly type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber"
+                placeholder="">
+            </div>
+
+          </div>
+          <div class="col-md-6 col-lg-6 part1">
+            <div class="form-group">
+              <label for="unitHeadEmail">Unit Head's Email*</label>
+              <input readonly type="text" formControlName="emailId" id="emailId" class="form-control">
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6 col-lg-6 part1">
+        <span class="mt2 float-md-right"><a (click)="addUnitMore()" class=add_text>Add Another Workplace Unit</a></span>
+      </div>
+    </div> -->
+    <div class="col-md-12 col-lg-12 ">
+      <div class="submit">
+        <button type="button" class="btn btn-primary round" [disabled]="addUnitForm.invalid" (click)="saveUnitDetails()">Submit</button>
+      </div><br><br>
+    </div>
+  </form>
+</div>
+<br /><br /><br />

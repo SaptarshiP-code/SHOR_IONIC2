@@ -1,0 +1,31 @@
+@import '../../scss/common.scss';
+
+.form-header {
+    background-color: #ebf0ff;
+    text-align: center;
+    color: #424242;
+    padding: 5px 3%;
+    font-size: 20px;
+    -webkit-text-decoration: none solid #424242;
+    text-decoration: none solid #424242;
+}
+.txt-cntr{
+    text-align: center;
+}
+.note-content{
+    margin-top: 5%;
+    font-size: 22px;
+}
+.note {
+    text-align: justify;
+}
+.privacyp1{
+    font-style: italic;
+}
+.note{
+    font-size: 14px;
+}
+.row{
+    margin-right: 0;
+}
+

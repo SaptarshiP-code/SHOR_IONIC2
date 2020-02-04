@@ -1,0 +1,317 @@
+<ion-content scrollY="true">
+<app-loading-screen></app-loading-screen>
+<div class="row ">
+  <div class="col-sm-12 form-header title">
+
+    Reports
+
+  </div>
+</div>
+<div class="col-sm-9 m-auto m-bottom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="javascript:void()" (click)="openTab('AnnualReport')" class="btn tab-btn"
+        [ngClass]="{'active': tabName=='AnnualReport'}">Annual Report</a></li>
+    <li class="active" *ngIf="userCategory == 'do' || userCategory == 'dpo'"><a href="javascript:void()"
+        (click)="openTab('OrganisationStatusReport')" class="btn tab-btn"
+        [ngClass]="{'active': tabName=='OrganisationStatusReport'}">Organisation Status Report</a></li>
+    <li class="active" *ngIf="userCategory == 'do'  || userCategory == 'dpo'"><a href="javascript:void()"
+        (click)="openTab('ComplaintDetailsReport')" class="btn tab-btn"
+        [ngClass]="{'active': tabName=='ComplaintDetailsReport'}">Complaint Details Report</a></li>
+  </ul>
+
+  <div class="tab-data" *ngIf="tabName === 'AnnualReport'">
+    <div class="annualreport m-auto">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          <div class="row">
+            <div class="col-sm-4 m-auto annmain">
+              <div class="annualreporty">Annual Report for the Year :
+                <select (change)="selectYear($event.target.value)">
+                  <option value=2019>2019</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-8 m-auto">
+              <div class="tab-list">
+                <a href="javascript:void();" (click)="downloadPdf();"><button><img
+                      src='../../../../../assets/icons/Download.svg'> Download</button></a>
+              </div>
+            </div>
+
+          </div>
+          <!----Card deck-->
+          <div *ngIf="showAnnualReport">
+            <div class="row">
+              <div class="col-sm-6 col-md-6 col-lg-3  m-auto annmain">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">COMPLAINTS RECEIVED</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{reportData.totalComplaints}}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6 col-lg-3  m-auto annmain">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">COMPLAINTS DISPOSED OF</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{reportData.totalDisposedComplaints}}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6 col-lg-3  m-auto annmain">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">CASES PENDING FOR MORE THAN 90 DAYS</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{reportData.pendingComplaints}}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6 col-lg-3  m-auto annmain">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">AWARENESS PROGRAMMES CARRIED OUT</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{reportData.awarenessPrograms}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <table class="table table-bordered annualbodyre">
+              <div class="row">
+                <div class="annualbodytitle">
+                  <br />
+                  Nature of action taken
+                </div>
+                <div class="annualbody" *ngIf="reportData.comments">
+                  <p *ngFor="let comments of reportData.comments "> {{comments}} </p>
+                </div>
+              </div>
+            </table>
+          </div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!---------------Complaint Details Report----->
+  <div class="tab-data complainantDetailReport" *ngIf="tabName === 'ComplaintDetailsReport'">
+    <div class="annualreport m-auto">
+      <form [formGroup]="ComplaintDetailsReportForm">
+        <div class="row">
+          <div class="col-md-3 col-lg-3 part1">
+            <div class="form-group">
+              <label for="year">Year</label>
+              <select formControlName="year" class="form-control" id="year" (change)="getComplaintDetailsReport()">
+
+                <option value=2019 selected>2019</option>
+
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3 part1">
+            <div class="form-group">
+              <label for="status">Status </label>
+              <select formControlName="status" class="form-control" id="status " (change)="getComplaintDetailsReport()">
+                <option value="all" selected>All </option>
+                <option value="disposed">Disposed</option>
+                <option value="In-Progress">In-Progress</option>
+                <option value="pending"> pending</option>
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3 part1">
+            <div class="form-group">
+              <label for="recieved">ICC/LCC</label>
+              <select formControlName="recieved" class="form-control" id="recieved"
+                (change)="getComplaintDetailsReport()">
+                <option value="all" selected>All</option>
+                <option value="icc">ICC</option>
+                <option value="lcc">LCC</option>
+
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-3 m-auto">
+            <div class="tab-list">
+              <button (click)="complaintDownloadPdf();"><img
+                    src='../../../../../assets/icons/Download.svg'> Download</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      <div class="col-md-12 totalComplaints text-center">
+        <span class="text"> Complaints found as per your selection:</span> <span
+          class="count">{{ComplaintDataCount}}</span>
+      </div>
+
+      <table class="table table-striped" [mfData]="ComplaintReportData" #mf="mfDataTable" [mfRowsOnPage]="5" id="complaint-report">
+        <thead>
+          <tr>
+            <th style="width: 8%">
+              <mfDefaultSorter by="id">Complaint ID</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="status">Status</mfDefaultSorter>
+            </th>
+            <th style="width: 5%">
+              <mfDefaultSorter by="complaintViewer">Received By/<br /> Pending With</mfDefaultSorter>
+            </th>
+            <th style="width: 8%">
+              <mfDefaultSorter by="createdAt">Date​ Recieved</mfDefaultSorter>
+            </th>
+            <th style="width: 8%">
+              <mfDefaultSorter by="code">Organisation <br /> Category </mfDefaultSorter>
+            </th>
+            <th style="width: 8%">
+              <mfDefaultSorter by="code">Organisation <br /> Name</mfDefaultSorter>
+            </th>
+            <th style="width: 36%">
+              <mfDefaultSorter by="code">Organisation Address</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let complaintData of mf.data; let i= index">
+
+            <td class="compid">
+              <a [routerLink]="['/complaints/detail/'+complaintData.id]">{{complaintData.id}}</a>
+            </td>
+            <td>
+              {{complaintData.status}}
+            </td>
+            <td>
+              {{complaintData.complaintViewer}}
+            </td>
+            <td>
+              {{complaintData.createdAt|date: 'MM/dd/yyyy' }}
+            </td>
+            <td>
+              <span
+                *ngIf="complaintData.workPlace && complaintData.workPlace.organisation && complaintData.workPlace.organisation.category">{{complaintData.workPlace.organisation.category}}
+              </span>
+            </td>
+            <td>
+              <span
+                *ngIf="complaintData.workPlace && complaintData.workPlace.organisation && complaintData.workPlace.organisation.name">{{complaintData.workPlace.organisation.name}}
+              </span>
+            </td>
+            <td>
+              <span
+                *ngIf="complaintData.workPlace && complaintData.workPlace.organisation && complaintData.workPlace.organisation.address">{{complaintData.workPlace.organisation.address}}
+              </span>
+            </td>
+
+
+          </tr>
+          <tr>
+            <td colspan="7">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!---------------Organisation Status Report----->
+  <div class="tab-data complainantDetailReport" *ngIf="tabName === 'OrganisationStatusReport'">
+    <div class="annualreport m-auto">
+      <form [formGroup]="OrganisationStatusReportForm">
+        <div class="row">
+          <div class="col-md-3 col-lg-3 part1">
+            <div class="form-group">
+              <label for="regstatus">Registration Status</label>
+              <select formControlName="regStatus" class="form-control" id="regStatus"
+                (change)="getOrganisationStatusReport()">
+
+                <option value="all" selected>All</option>
+                <option value="true" selected>Registered</option>
+                <option value="false" selected>Not Registered</option>
+
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3 part1">
+            <div class="form-group">
+              <label for="iccstatus">ICC Status </label>
+              <select formControlName="iccStatus" class="form-control" id="iccStatus"
+                (change)="getOrganisationStatusReport()">
+                <option value="all" selected>All </option>
+                <option value="true">ICC Constituted</option>
+                <option value="false">Not Constituted</option>
+
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-3 m-auto">
+              <div class="tab-list">
+                <button (click)="organizationDownloadPdf();">
+                  <img
+                      src='../../../../../assets/icons/Download.svg'> Download</button>
+              </div>
+            </div>
+          
+        </div>
+
+      </form>
+      <div class="col-md-12 totalComplaints text-center">
+        <span *ngIf="OrganisationReportData && showOrgnaisationReport == true && OrganisationReportData.orgRegistered"> <span class="text"> Organisation Registred:</span> <span
+            class="count">{{OrganisationReportData.orgRegistered}}<span *ngIf = "OrganisationReportData.totalOrg" >/{{OrganisationReportData.totalOrg}}</span>
+          
+          </span></span>
+        <span *ngIf="OrganisationReportData && showOrgnaisationReport == true && OrganisationReportData.iccFormed"> <span class="text"> ICC Constituted:</span> <span
+            class="count">{{OrganisationReportData.iccFormed}}</span></span>
+      </div>
+      <div class="col-md-12" *ngIf= "showOrgnaisationReport == true">
+      <table class="table table-striped orgReport" [mfData]="OrganisationReportData.list" #mf="mfDataTable"
+        [mfRowsOnPage]="50">
+        <thead>
+          <tr>
+            <th style="width: 30%">
+              <mfDefaultSorter by="orgName">Organisation Name</mfDefaultSorter>
+            </th>
+            <th style="width: 30%">
+              <mfDefaultSorter by="status">Registration Status</mfDefaultSorter>
+            </th>
+            <th style="width: 40%">
+              <mfDefaultSorter by="iccStatus">ICC Constituted</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let organisationData of mf.data; let i= index">
+
+            <td class="compid">
+              {{organisationData.orgName}}
+            </td>
+            <td>
+              <span *ngIf="organisationData.status == true; else notRegistered" class="text-green">Registered</span>
+              <ng-template #notRegistered>
+                <span class="text-red">Not Registered</span></ng-template>
+
+            </td>
+            <td>
+              <span *ngIf="organisationData.iccStatus == true; else notConstituted" class="text-green">YES</span>
+              <ng-template #notConstituted>
+                <span class="text-red">NO</span></ng-template>
+
+            </td>
+          </tr>
+          <tr>
+            <td colspan="7">
+              <mfBootstrapPaginator [rowsOnPageSet]="[50, 100, 200]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<br /><br /><br /><br />
+</ion-content>

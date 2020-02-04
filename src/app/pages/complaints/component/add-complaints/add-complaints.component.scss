@@ -1,0 +1,291 @@
+@import '../../../../scss/common.scss';
+.row{
+  margin-left: 0;
+  margin-right: 0;
+}
+.ngx-datepicker-calendar-container {
+  z-index: 5!important;
+}
+.org-name{
+
+    font-size: 16px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+    text-align: center;
+}
+.icc-data{
+  .text{
+    font-size: 16px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+  }
+  .head{
+    font-size: 16px;
+    color: #424242;
+    text-decoration: none solid rgb(66, 66, 66);
+  }
+
+}
+// .form-header{
+//     background-color: #ebf0ff;
+//     text-align: left;
+//     color: #424242;
+//     padding: 5px 3%;
+//     font-size: 20px;
+//     text-decoration: none solid rgb(66, 66, 66);
+//     height:40px;
+//   }
+  .step{
+    font-size: 16px;
+    font-weight: 600;
+    padding-left: 0;
+  
+    }
+    .step-desc{
+    font-size: 16px;
+    padding-left: 15px;
+    }
+  
+  .form {
+    width:100%;
+    // padding: $gap;
+    padding: 2px 0;
+    .expectedAction{
+      width:95%!important;
+    }
+    .attachimg{
+    background: white;
+    border: 1px solid #c8c8c8;
+    padding: 10px;
+    }
+    .submit {
+      margin-top: 6%;
+      width: 100%;
+    }
+    .form-control{
+      font-size: 12px;
+      width:90%;
+    }
+    
+    .form-control-radio,
+    .form-group-radio{
+      font-size: 16px;
+     
+    }
+    .text-box{
+      min-height: 35px;
+      padding: 0px 10px;
+      border: 1px solid #999999;
+      border-radius: 5px;
+      background-color: #ffffff;
+      font-size: 16px;
+      color: #424242;
+      text-decoration: none solid rgb(66, 66, 66);
+    }
+    .part2, .part1{
+      float:left;
+      margin-top: 3%;
+    }
+    label{
+        height: 17px;
+        font-size: 12px;
+        color: #424242;
+        text-decoration: none solid rgb(66, 66, 66);
+        margin-bottom: 7px;
+    }
+   
+    .btn{
+      border-radius: 5px;
+      background-color: #891199;
+      background-size: cover;
+      font-size: 16px;
+      color: #ffffff;
+      text-decoration: none solid rgb(255, 255, 255);
+      text-align: center;
+      min-width:210px;
+    }
+    .submit{
+      text-align: center;
+    }
+  }
+  table{
+
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    margin-top:20px;
+    th{
+        font-size: 16px;
+        color: #424242;
+        font-weight: 600;
+        text-decoration: none solid rgb(66, 66, 66);
+        text-align: left;
+        background-color: #cccccc;
+        .td-data{
+            text-align: center;
+        }  
+    }
+    td{
+        font-size: 16px;
+        color: #424242;
+        text-decoration: none solid rgb(66, 66, 66);
+        text-align:left;
+        background-color: #fff;
+        
+    }
+
+}
+.ngx-datepicker-calendar-container {
+  z-index: 999!important;
+}
+.form-group .alert-danger {
+  font-size: 11px;
+  padding: 5px;
+  /* background: transparent; */
+  /* border: none; */
+}
+btn-text{
+  display: contents;
+  text-decoration: underline;
+  color: blue;
+  text-align: right;
+}
+.d-none{
+  cursor: pointer;
+}
+
+.comp{
+  margin-bottom:1%;
+}
+.onbehalf {
+  padding-left: 0px !important;
+}
+.orgsearch{
+  float: left;
+}
+.search-icon{
+    height: 29px;
+    margin-left: -28px;
+    margin-top: 5px;
+    padding: 6px;
+}
+.search-label{
+  width: 100%;
+}
+.icc-data {
+  background: white;
+  border: 1px solid #cccccc;
+  padding: 25px;
+}
+.iccrow {
+  margin-top: 8px;
+}
+.btn-link {
+  text-decoration: none;
+    
+    background: none;
+    font-size: 12px;
+    color: #308bf2 !important;
+    font-weight: 600;
+    border: none;
+    padding-right: 5%;
+}
+.btn-link:focus{
+  outline: none;
+}
+ //Calendar CSS
+ .dp-calendar-nav-container-right {
+  position: absolute;
+  right: 14px;
+}
+
+.dp-current-location-btn {
+  position: absolute;
+  left: 20%;
+}
+
+.dp-calendar-nav-container-left {
+  position: absolute;
+  left: 6px;
+  top: 0;
+}
+
+dp-calendar-nav .dp-nav-btns-container {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 5px;
+  display: inline-block;
+  width: 100%!important;
+}
+//Calendar CSS
+.dp-calendar-nav-container-right {
+  position: absolute;
+  right: 14px;
+}
+
+.dp-current-location-btn {
+  position: absolute;
+  left: 20%;
+}
+
+.dp-calendar-nav-container-left {
+  position: absolute;
+  left: 6px;
+  top: 0;
+}
+
+dp-calendar-nav .dp-nav-btns-container {
+left:30%!important
+}
+.dp-material {
+  width: 100%;
+}
+dp-date-picker.dp-material .dp-picker-input {
+  width: 90%;
+}
+.helpTitle {
+  font-weight: 600;
+    font-size: 11px;
+    font-style: italic;
+    text-align: center;
+    color: #424242;
+    margin-top: 5px;
+}
+.helpBody {
+  font-size: 12px;
+  text-align: justify;
+  //padding: 5% 8% 1% 0%;
+}
+.helpText {
+  background: #e6e6e6;
+    // position: absolute;
+    // left: 5%;
+    // top: 31%;
+}
+.helpText ul{
+  padding:5px!important;
+}
+a.btn-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+a:hover {
+  color: #308bf2;
+}
+a{
+  color: #308bf2;
+  
+}
+.closebtn {
+  float: right;
+  padding: 3%;
+}
+li {
+  list-style: none;
+}
+.padding-right-6p{
+  padding-right:6%!important;
+}

@@ -1,0 +1,52 @@
+<ion-content scrollY="true">
+<div class="row ">
+  <div class="col-sm-12 form-header title">
+
+    {{'RESOURCES.RESOURCES' | translate}}
+
+  </div>
+
+  <div class="col-sm-9 m-auto">
+    <ul class="nav nav-tabs">
+      <li><a href="javascript:void()" (click)="openTab('Acts')" class="btn tab-btn"
+          [ngClass]="{'active': tabName=='Acts'}"> {{'RESOURCES.ACT' | translate}}</a></li>
+      <li><a href="javascript:void()" (click)="openTab('Rules')" class="btn tab-btn"
+          [ngClass]="{'active': tabName=='Rules'}">{{'RESOURCES.RULES' | translate}}</a></li>
+      <li><a href="javascript:void()" (click)="openTab('Handbook')" class="btn tab-btn"
+          [ngClass]="{'active': tabName=='Handbook'}">{{'RESOURCES.HANDBOOK' | translate}}</a></li>
+    </ul>
+    <div class="tab-data" *ngIf="tabName === 'Acts'">
+
+
+      <div class="tab-list">
+        <span>{{'RESOURCES.SEXUAL_HARASSMENT_WORKPLACE_ACT' | translate}}</span>
+           <button type="button"  (click)="downloadFile('Sexual-Harassment-at-Workplace-Act')">
+            <img
+              src='../../../../../assets/icons/Download.svg'> {{'BUTTON.DOWNLOAD' | translate}}</button> 
+            
+      </div>
+      <div class="tab-list bg-light">
+        <span>{{'RESOURCES.SEXUAL_HARASSMENT_WORKPLACE_ACT_HN' | translate}}</span>    
+          <button type="button"  (click)="downloadFile('Sexual-Harassment-at-Workplace-Act-Hindi')"><img src='../../../../../assets/icons/Download.svg'>
+            {{'BUTTON.DOWNLOAD' | translate}}</button>
+      </div>
+    </div>
+    <div class="tab-data" *ngIf="tabName === 'Rules'">
+      <div class="tab-list">
+        <span>{{'RESOURCES.SEXUAL_HARASSMENT_WORKPLACE_RULE' | translate}}</span>
+        <button (click)="downloadFile('Sexual-Harassment-at-Workplace-Rules')"><img
+            src='../../../../../assets/icons/Download.svg'> {{'BUTTON.DOWNLOAD' | translate}}</button>
+        </div>
+    </div>
+    <div class="tab-data" *ngIf="tabName === 'Handbook'">
+      <div class="tab-list">
+        <span>{{'RESOURCES.HANDBOOK_SEXUAL_HARASSMENT' | translate}}</span>
+          <button type="button"   (click)="downloadFile('Handbook-on-Sexual-Harassment-of-Women-at-Workplace')"><img
+              src='../../../../../assets/icons/Download.svg'> {{'BUTTON.DOWNLOAD' | translate}}</button>
+            </div>
+
+    </div>
+  </div>
+
+</div>
+</ion-content>

@@ -1,0 +1,178 @@
+@import '../../scss/common.scss';
+
+.tab-data{
+border: 1px solid #ccc;
+background-color: #ffffff;
+background-size: cover;
+box-shadow: 0px 1px 2px rgba(0,0,0,0.12);
+margin-top: 20px;
+}
+.complainantDetailReport{
+    padding-top: 15px;
+}
+.row{
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .title{
+    text-align: center;
+    }
+    .tab-btn{
+        width: 300px;
+        height: 40px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: #cccccc;
+        font-size: 16px;
+        color: #424242;
+        text-decoration: none solid rgb(66, 66, 66);
+        text-align: center;
+        font-weight: 600;
+       
+    }
+    .tab-btn.active {
+        background: #891199;
+        color: #ffffff;
+    }
+    .nav-tabs{
+        border-bottom: 5px solid #891199;
+        margin-top: 20px;
+        margin-bottom: -20px;
+    }
+    // table{
+
+    //     border: 1px solid #cccccc;
+    //     background-color: #ffffff;
+    //     margin-top:20px;
+    // }
+    .tab-list button {
+        padding: 5px 15px;
+        border-radius: 5px;
+        background-color: #891199;
+        font-size: 16px;
+        color: #ffffff;
+        text-decoration: none solid rgb(255, 255, 255);
+        text-align: center;
+        }
+    .tab-list{
+        text-align:right;
+        }
+
+    .annualreporty{
+        font-size: 14px;
+        color: #424242;
+        font-weight: 600;
+        text-decoration: none solid rgb(66, 66, 66);
+    }
+    
+    
+    .card-title{
+        font-size: 16px;
+        color: #891199;
+        font-weight: 600;
+        text-decoration: none solid rgb(137, 17, 153);
+        text-transform: uppercase;
+        text-align: center;
+    }
+    .card-body{
+        width: 100%;
+        min-height: 120px;
+        margin:auto;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
+        background-color: #ffffff;
+        background-size: cover;
+        box-shadow: 1px 1px 10px -3px rgba(59,59,59,0.41);
+        padding:10px;
+    }
+    .card-subtitle{
+        
+        font-size: 20px;
+        color: #878787;
+        font-weight: 600;
+        text-decoration: none solid rgb(135, 135, 135);
+        text-align: center;
+    }
+    .annmain{
+        padding: 2%;
+    }
+    .annualbodytitle{
+        font-size: 16px;
+        color: #891199;
+        font-weight: 600;
+        text-decoration: none solid rgb(137, 17, 153);
+        text-transform: uppercase;
+        margin: 0 10px;
+    }
+    .annualbody{
+        width:100%;
+        margin: 0 10px;
+        p{
+            width:100%;
+            padding: 5px;
+        }
+    }
+
+    table th {
+        font-size: 14px;
+        color: #424242;
+        font-weight: 600;
+        -webkit-text-decoration: none solid #424242;
+        text-decoration: none solid #424242;
+        text-align: center;
+        background-color: #cccccc;
+
+    }
+
+     table td {
+        font-size: 14px;
+        font-weight: 600;
+        color: #424242;
+        text-align: center;
+        border-top: 1px solid #cccccc;
+    }
+    .compid a {
+        color: #891199;
+    }
+    .totalComplaints{
+        text-align: center;
+        .text{
+            /* Complaints found ... */
+            font-family: Open Sans;
+            font-size: 16px;
+            color: #891199;
+            font-weight: 600;
+            text-decoration: none solid rgb(137, 17, 153);
+            text-align: center;
+        }
+        .count{
+            /* 221 */
+            font-family: Open Sans;
+            font-size: 24px;
+            color: #8f8f8f;
+            font-weight: 600;
+            text-decoration: none solid rgb(143, 143, 143);
+            text-align: center;
+        }
+
+    }
+.text-green{
+    font-family: Open Sans;
+    font-size: 14px!important;
+    color: #008a0b!important;
+    font-weight: 600;
+    text-decoration: none solid rgb(0, 138, 11);
+    text-align: center;
+}
+.text-red{
+    font-family: Open Sans;
+    font-size: 14px!important;
+    color: #ba0404!important;
+    font-weight: 600;
+    text-decoration: none solid rgb(186, 4, 4);
+    text-align: center;
+}
+td.compid {
+    color: #891199 !important;
+}

@@ -1,0 +1,79 @@
+@import '../../../../scss/common.scss';
+.row{
+  margin-left: 0;
+  margin-right: 0;
+}
+// .form-header{
+//     background-color: #ebf0ff;
+//     text-align: left;
+//     color: #424242;
+//     padding: 5px 3%;
+//     font-size: 20px;
+//     text-decoration: none solid rgb(66, 66, 66);
+//     height:40px;
+//   }
+
+  .title{
+    text-align: center;
+    }
+    table{
+
+      border: 1px solid #cccccc;
+      background-color: #ffffff;
+      margin-top:20px;
+      th{
+          // font-size: 12px;
+          color: #424242;
+          font-weight: 600;
+          text-decoration: none solid rgb(66, 66, 66);
+          text-align: left;
+          background-color: #cccccc;
+          .td-data{
+              text-align: center;
+          }  
+      }
+      td{
+          // font-size: 12px;
+          color: #424242;
+          text-decoration: none solid rgb(66, 66, 66);
+          text-align:left;
+          background-color: #fff;
+          
+      }
+
+  }
+  .add-button{
+    position: fixed;
+    right: 15px;
+    bottom: 45px;
+    border-radius: 5px;
+    background-color: #891199;
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none solid rgb(255, 255, 255);
+    text-align: center;
+}
+.description-text{
+  white-space: pre-wrap;
+}
+.tab-btn{
+  width: 210px;
+  height: 40px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #cccccc;
+  font-size: 16px;
+  color: #424242;
+  text-decoration: none solid rgb(66, 66, 66);
+  text-align: center;
+ 
+}
+.tab-btn.active {
+  background: #891199;
+  color: #ffffff;
+}
+.nav-tabs{
+ border-bottom: 2px solid #891199;
+ margin-top: 20px;
+ margin-bottom: -20px;
+}

@@ -1,0 +1,57 @@
+@import '../../scss/common.scss';
+
+.row{
+    margin-left: 0;
+    margin-right: 0;
+  }
+  // .form-header{
+  //   background-color: #ebf0ff;
+  //   text-align: center;
+  //   color: #424242;
+  //   padding: 5px 3%;
+  //   font-size: 20px;
+  //   text-decoration: none solid rgb(66, 66, 66);
+  //   height:40px;
+  // }
+
+  .title{
+    text-align: center;
+    }
+
+    .taimg {
+        /* margin-top: -2px; */
+        padding: 1%;
+    }
+    .trainingimg {
+       
+        font-size: 12px;
+        color: #891199;
+        font-weight: 600;
+        font-style: italic;
+        text-decoration: none solid rgb(137, 17, 153);
+        /* float: right; */
+        text-align: right;
+    }
+    .historytitle{
+        font-size: 22px;
+        color: #891199;
+        font-weight: 600;
+        text-decoration: none solid rgb(137, 17, 153);
+    }
+    .historybody{
+    font-size: 14px;
+    color: #424242;
+    text-decoration: none solid rgb(66, 66, 66);
+    }
+    iframe.histvid {
+        /* text-align: center !important; */
+        margin-left: 20%;
+    }
+    img{
+        width: 100%;
+    }
+    .title-text{
+font-size: 16px;
+color: #891199;
+font-weight:600;
+    }

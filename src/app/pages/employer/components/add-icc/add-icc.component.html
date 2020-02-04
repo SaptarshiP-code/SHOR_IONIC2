@@ -1,0 +1,160 @@
+<div class="row main-content">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4  title">
+      Add ICC Member
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <alert></alert>
+  </div>
+  <div class="col-sm-2 col-md-2 col-lg-2 part1">
+      
+  </div>
+  <div class="col-sm-8 col-md-8 col-lg-8 m-auto form">
+    <form [formGroup]="addIccForm">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="userSubCategory">Type of ICC Member*</label>
+            <select formControlName="userSubCategory" class="form-control" id="userSubCategory"
+              (change)="setValueByCategory()"[ngClass]="{'is-invalid': submitted == true && f.userSubCategory.errors && f.userSubCategory.errors.required}">
+              <option value="chairperson">Chairperson</option>
+              <option value="employee">Employee</option>
+              <option value="ngo">NGO Representative</option>
+            </select>
+            <div *ngIf="submitted == true && f.userSubCategory.errors && f.userSubCategory.errors.required"
+            class="invalid-feedback">
+            Please enter 
+          </div>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender*</label>
+            <select formControlName="gender" class="form-control" id="gender" ng-readonly="readonly : readOnlyField.gender==true"[ngClass]="{
+              'is-invalid': submitted == true && f.gender.errors && f.gender.errors.required}">
+              <option value="Male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <div *ngIf="submitted == true && f.gender.errors && f.gender.errors.required"
+            class="invalid-feedback">
+            Please enter Gender
+          </div>
+          </div>
+          <div class="form-group">
+            <label for="unitHeadMobile">Mobile Number*</label>
+            <input type="text" formControlName="mobileNumber" class="form-control" id="unitHeadMobile" placeholder="" pattern="[0-9]*" maxlength="10" minlength="10"
+            [ngClass]="{'is-invalid': submitted == true && f.mobileNumber.errors}">
+            <div *ngIf="submitted == true && f.mobileNumber.errors && f.mobileNumber.errors.required"
+            class="invalid-feedback">
+            Please enter Mobile Number
+          </div>
+          <div *ngIf="submitted == true && f.mobileNumber.errors && f.mobileNumber.errors.minlength"
+            class="invalid-feedback">
+            Please enter valid Mobile Number
+          </div>
+          </div>
+          <div class="form-group">
+            <label for="department">Department*</label>
+            <input type="text" formControlName="department" class="form-control" id="department" placeholder="" [ngClass]="{'is-invalid': submitted == true && f.department.errors && f.department.errors.required}">
+            <div *ngIf="submitted == true && f.department.errors && f.department.errors.required"
+            class="invalid-feedback">
+            Please enter Department
+          </div>
+          </div>
+          <div class="form-group">
+            <label for="dateOfNomination">Date of Nomination*</label>
+            <!-- <input type="text" formControlName="dateOfNomination" class="form-control" id="dateOfNomination"
+              placeholder=""> -->
+              <!-- <ng-datepicker [(ngModel)]="dateOfNomination" [options]="options"></ng-datepicker> -->
+              <div class="datepicker-container">
+                  <ng-datepicker class="form-control" formControlName="dateOfNomination" [options]="options" position="top-left"[ngClass]="{
+                    'is-invalid': submitted == true && f.dateOfNomination.errors && f.dateOfNomination.errors.required}"></ng-datepicker>
+                    <div *ngIf="submitted == true && f.dateOfNomination.errors && f.dateOfNomination.errors.required"
+                    class="invalid-feedback">
+                    Please select Date
+                  </div>
+                  </div>
+          </div>
+
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="name">Name*</label>
+            <input type="text" formControlName="name" class="form-control" id="name" placeholder=" "[ngClass]="{
+              'is-invalid': submitted == true && f.name.errors && f.name.errors.required}">
+              <div *ngIf="submitted == true && f.name.errors && f.name.errors.required"
+                    class="invalid-feedback">
+                    Please enter Name
+                  </div>
+            <!-- <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Please enter your name.
+                  </div>
+              </div> -->
+          </div>
+
+          <div class="form-group">
+            <label for="unitHeadEmail">Email*</label>
+            <input type="text" formControlName="emailId" id="emailId" class="form-control"[ngClass]="{
+              'is-invalid': submitted == true && f.emailId.errors && f.emailId.errors.required}">
+              <div *ngIf="submitted == true && f.emailId.errors && f.emailId.errors.required"
+                    class="invalid-feedback">
+                    Please enter Email-ID
+                  </div>
+          </div>
+
+          <div class="form-group">
+            <label for="organisationName">Organisation*</label>
+            <input type="text" formControlName="organisationName" ng-readonly = "readonly: readOnlyField.organization == true" id="organisationName" class="form-control"[ngClass]="{
+              'is-invalid': submitted == true && f.organisationName.errors && f.organisationName.errors.required}">
+              <div *ngIf="submitted == true && f.organisationName.errors && f.organisationName.errors.required"
+                    class="invalid-feedback">
+                    Please enter Organisation Name
+                  </div>
+          </div>
+          <div class="form-group">
+            <label for="designation">Designation*</label>
+            <input type="text" formControlName="designation" id="designation" class="form-control"[ngClass]="{
+              'is-invalid': submitted == true && f.designation.errors && f.designation.errors.required}">
+              <div *ngIf="submitted == true && f.designation.errors && f.designation.errors.required"
+                    class="invalid-feedback">
+                    Please enter Designation
+                  </div>
+            
+          </div>
+          <div class="form-group">
+            <label for="address">Relevant Skills / Trainings / Experience*</label>
+
+            <textarea formControlName="experience" class="form-control " id="experience" placeholder=" "
+              rows="5" cols="5"[ngClass]="{
+                'is-invalid': submitted == true && f.experience.errors && f.experience.errors.required}">
+               
+
+                                            </textarea>
+                                            <div *ngIf="submitted == true && f.experience.errors && f.experience.errors.required"
+                                            class="invalid-feedback">
+                                            Please enter Relevant Skills / Trainings / Experience
+                                          </div>
+            <!-- <input type="text" formControlName="address" class="form-control" id="address" placeholder="address"> -->
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-md-12 col-lg-12 ">
+        <div class="submit">
+          <input type="hidden" formControlName="unitName" id="unitName" value="{{unitName}}" />
+          <input type="hidden" formControlName="unitCode" id="unitCode" value="{{unitCode}}" />
+          <input type="hidden" formControlName="regNumber" id="regNumber" value="{{orgCode}}" />
+          <button type="button" class="btn btn-primary round" [routerLink]="['/employer/icc']">Back</button> &nbsp; &nbsp;
+          <button type="submit" class="btn btn-primary round" (click)="saveIccMembers()">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-sm-2 col-md-2 col-lg-2 part1">
+      <div class=" mandatory text-right">
+          * {{'COMMON.MANDATORY' | translate}} 
+        </div>
+  </div>
+</div>

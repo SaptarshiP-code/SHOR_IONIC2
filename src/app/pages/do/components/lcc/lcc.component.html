@@ -1,0 +1,126 @@
+<div class="row ">
+  <div class="col-sm-12 row form-header">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4  title">
+      LCC Members
+    </div>
+    <div class="col-sm-4 text-right">
+      <!-- <a  [routerLink]="['/do']">Back</a> &nbsp; &nbsp; -->
+    </div>
+  </div>
+</div>
+<div class="col-sm-9 m-auto">
+    <ul class="nav nav-tabs">
+        <li><button  type="button" (click)="openTab('active')" class="btn tab-btn"
+          [ngClass]="{'active': tabName=='active'}">Active</button></li>
+      <li><button type="button"  (click)="openTab('historic')" class="btn tab-btn"
+          [ngClass]="{'active': tabName=='historic'}">Inactive/Historical</button></li>
+     
+  
+    </ul>
+    <div *ngIf = "loadLccData == true">
+  <table class="table table-striped table-bordered" [mfData]="lccDataFilter" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+      <tr>
+        <th style="width: 25%">
+          <mfDefaultSorter by="code">Personal Details</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+          <mfDefaultSorter by="designation">Designation</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+          <mfDefaultSorter by="department">Department</mfDefaultSorter>
+        </th>
+        <th style="width: 50%">
+          <mfDefaultSorter by="experience">Experience</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+          <mfDefaultSorter by="dateOfNomination">Date</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+          <mfDefaultSorter by="department">Category</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+          <mfDefaultSorter by="department">Status</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+          <mfDefaultSorter by="department">Update</mfDefaultSorter>
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let icc of mf.data; let i= index">
+        <td> <a [routerLink]="['/do/update/'+icc._id]">{{icc.name | titlecase}}( {{icc.gender | titlecase }} )
+            <br />{{icc.mobileNumber}}
+            {{icc.emailId}} </a>
+            <!-- <ng-template #inactivedata>
+                {{icc.name | titlecase}}( {{icc.gender | titlecase }} )
+                <br />{{icc.mobileNumber}}<br />
+                {{icc.emailId}}
+            </ng-template> -->
+        </td>
+        <td>{{icc.designation | titlecase }}</td>
+        <td>{{icc.department | titlecase }}</td>
+        <td class="description-text">{{icc.experience}}</td>
+        <td>{{icc.dateOfNomination  | date: 'MM/dd/yyyy' }}</td>
+        <td> {{icc.user.subCategory | titlecase }} </td>
+        <td> {{icc.status | titlecase }}</td>
+        <td>
+          <!-- <a [routerLink]="['/do/update/'+icc._id]">Edit</a> <br/> -->
+          <button class="btn-link" *ngIf ="icc.user.subCategory!='chairperson'"  (click)="open(content,icc._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8">
+          <mfBootstrapPaginator [rowsOnPageSet]="[5, 10,25, 100]"></mfBootstrapPaginator>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+</div>
+<div class="md-col-12 ml-auto">
+  <a [routerLink]="['/do/add']" class="btn add-button">
+    Add LCC Member</a></div>
+<br /><br /><br /><br />
+
+<ng-template #content let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete LCC Member</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- <div *ngIf="transferSuccess == false"> -->
+    <!-- {{'DETAIL_COMPLAINANT.CONFIRM_TRANSFER_MESSAGE' | translate}}  -->
+    <div *ngIf="lccDelete==false && deleteError==''"> Please confirm, if you want to delete the LCC Member
+
+    </div>
+    <div *ngIf="lccDelete==true && deleteError==''"> LCC Member Deleted Successfully </div>
+    <div *ngIf="deleteError!=''" class="alert alert-danger"> {{deleteError}} </div>
+    <!-- </div>
+          <div *ngIf="transferSuccess == true">{{'DETAIL_COMPLAINANT.TRANSFER_SUCCESS' | translate}}</div> -->
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" *ngIf="transferSuccess == false" class="btn btn-outline-dark"
+            (click)="transferComplaint()">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</button> &nbsp; &nbsp; -->
+
+    <!-- <button type="button" *ngIf="transferSuccess == true" class="btn btn-outline-dark"
+            (click)="confirmationClose()">{{'DETAIL_COMPLAINANT.OK' | translate}}</button> -->
+    <div *ngIf="lccDelete==false  && deleteError==''">
+      <button type="button" class="btn btn-outline-dark" (click)="deleteLcc(deleteUserId)">YES</button>
+      &nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">NO</button>
+    </div>
+    <div *ngIf="lccDelete==true || deleteError!=''">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">OK</button>
+
+    </div>
+  </div>
+
+</ng-template>

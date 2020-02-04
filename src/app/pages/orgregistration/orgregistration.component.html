@@ -1,0 +1,212 @@
+<div class="row main-content">
+  <div class="col-sm-12 form-header title">
+
+    Organisation Registration
+
+  </div>
+
+  
+  <div class="col-sm-2 col-md-2 col-lg-2 part1">
+    <div class="helpoText" *ngIf="showHelpText">
+      <div class="closebtn">
+        <a href="javascript:void()" class="btn-text" (click)="onCloseToggle()">X</a></div>
+      <div class="helpoTitle">
+        {{'COMMON.NEED_HELP' | translate}}
+      </div>
+      <div class="helpoBody">
+        <ul><b>Use any registration number unique to your organization. </b>
+          <p>Example: Registration Number, TAN, CIN, GST, Udyog Aadhar Number, IFSC, Factory License Number, Affiliation
+            Number or any other Unique ID.
+          </p>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8 col-md-8 col-lg-8  form">
+      <form [formGroup]="addOrgRegForm">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 part1">
+          <div class="form-group">
+            <label for="noOfEmployees">No. of Employees*</label>
+            <input type="text" formControlName="totalEmp" class="form-control text-box"
+              [ngClass]="{ 'is-invalid': submitted && f.totalEmp.errors }" />
+            <div *ngIf="submitted && f.totalEmp.errors" class="invalid-feedback">
+              <div *ngIf="f.totalEmp.errors.required"> Please enter No. of Employees</div>
+              <div *ngIf="f.totalEmp.errors.lessthen10">Employer registration is required only for organizations with 10
+                or more
+                Employees.</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 part1">
+          <div class="form-group">
+            <label for="orgType">Organisation Category*</label>
+            <select class="form-control text-box" id="workPlaceCategory" formControlName="orgType" [ngClass]="{ 'is-invalid': submitted && f.orgType.errors }"
+              (change)="changeCategory($event.target.value)">
+              <option value="">Please Select One</option>
+              <option *ngFor="let cat of workPlaceCategory;let i = index" [value]="cat.id">
+                {{ cat.name |titlecase}}
+              </option>
+            </select>
+            <div *ngIf="submitted == true && f.orgType.errors && f.orgType.errors.required" class="invalid-feedback">
+              Please Select Organisation Category
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="!HideSubCategory">
+        <div class="col-lg-6 col-md-6 part1">
+          <div class="form-group">
+            <label> {{'Organisation Sub-Category' | translate}} </label>
+            <select class="form-control text-box" id="workPlaceCategory" formControlName="orgSubCategory" [ngClass]="{ 'is-invalid': submitted && f.orgSubCategory.errors }" >
+              <option value="">Please Select One</option>
+              <option *ngFor="
+                          let subCat of SubCategoryOrganization;
+                          let i = index
+                        " [value]="subCat.id">
+                {{ subCat.name |titlecase}}
+              </option>
+            </select>
+            <div *ngIf="submitted && f.orgSubCategory.errors" class="invalid-feedback">
+                <div *ngIf="f.orgSubCategory.errors.required">Please Select Organisation Sub Category</div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="orgUniqueId">Organisation Unique ID*</label>
+            <a href="javascript:void()" class="btn-text" (click)="getHelpToggle()">{{'COMMON.NEED_HELP_TEXT' | translate}}</a>
+            <input type="text" formControlName="registrationNumber" class="text-box form-control" id="orgUniqueId" placeholder=""
+              [ngClass]="{
+              'is-invalid': submitted == true && f.registrationNumber.errors 
+            }">
+            <div *ngIf="submitted && f.registrationNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.registrationNumber.errors.SpecialCharactersExist">Special characters are not allowed!</div>
+              <div *ngIf="f.registrationNumber.errors.required">Please enter Organisation's Unique ID</div>
+              <div *ngIf="f.registrationNumber.errors.unique">Organization registration number not Valid </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="orgAddress">Organisation Address*</label>
+            <textarea formControlName="orgAddress" class="text-box form-control" id="orgAddress" placeholder=" "
+              [ngClass]="{'is-invalid': submitted == true && f.orgAddress.errors && f.orgAddress.errors.required}">
+                                </textarea>
+            <div *ngIf="submitted == true && f.orgAddress.errors && f.orgAddress.errors.required"
+              class="invalid-feedback">
+              Please enter Organisation Address
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="orgHeadName">Organisation Head's Name*</label>
+            <input type="text" formControlName="employerName" id="orgHeadName" class="text-box form-control"
+              [ngClass]="{
+                              'is-invalid': submitted == true && f.employerName.errors && f.employerName.errors.required}">
+            <div *ngIf="submitted == true && f.employerName.errors && f.employerName.errors.required"
+              class="invalid-feedback">
+              Please enter Organisation Head's Name
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 part1">
+          <div class="form-group">
+            <label for="orgName">Organisation Name*</label>
+            <input type="text" formControlName="orgName" id="orgName" class="text-box form-control" [ngClass]="{
+                          'is-invalid': submitted == true && f.orgName.errors && f.orgName.errors.required}">
+            <div *ngIf="submitted == true && f.orgName.errors && f.orgName.errors.required" class="invalid-feedback">
+              Please enter Organisation Name
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label>Organisation Head's Mobile Number*</label>
+          <input type="text" formControlName="mobileno" class="form-control text-box" pattern="[0-9]*" maxlength="10"
+            minlength="10" [ngClass]="{ 'is-invalid': submitted && f.mobileno.errors }" />
+          <div *ngIf="submitted && f.mobileno.errors" class="invalid-feedback">
+            <div *ngIf="f.mobileno.errors.required">Please enter Organisation Head's Mobile Number</div>
+            <div *ngIf="f.mobileno.errors.minlength">Incorrect Mobile Number (less than 10 or alpha-numeric string)
+            </div>
+            <div *ngIf="f.mobileno.errors.maxlength">Organisation Head's Mobile Number must be max 10 characters</div>
+          </div>
+        </div>
+        <div class="form-group col">
+          <label>Confirm Mobile Number*</label>
+          <input type="text" formControlName="confirmmobileno" class="form-control text-box"
+            [ngClass]="{ 'is-invalid': submitted && f.confirmmobileno.errors }" />
+          <div *ngIf="submitted && f.confirmmobileno.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmmobileno.errors.required">Please confirm Organisation Head's Mobile Number</div>
+            <div *ngIf="f.confirmmobileno.errors.mustMatch">Confirm Mobile Number does not match with organization head
+              mobile number</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label>Organisation Head's Email*</label>
+          <input type="email" formControlName="emailno" class="form-control text-box"
+            [ngClass]="{ 'is-invalid': submitted && f.emailno.errors }" />
+          <div *ngIf="submitted && f.emailno.errors" class="invalid-feedback">
+            <div *ngIf="f.emailno.errors.required">Please enter Organisation Head's Email</div>
+            <div *ngIf="f.emailno.errors.email">Please enter a valid e-mail id</div>
+          </div>
+        </div>
+        <div class="form-group col">
+          <label>Confirm Email*</label>
+          <input type="email" formControlName="confirmemail" class="form-control text-box"
+            [ngClass]="{ 'is-invalid': submitted && f.confirmemail.errors }" />
+          <div *ngIf="submitted && f.confirmemail.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmemail.errors.required">Please confirm Organisation Head's Email</div>
+            <div *ngIf="f.confirmemail.errors.mustMatch">Confirm e-mail id does not match with organization Head e-mail
+              id</div>
+            <div *ngIf="f.confirmemail.errors.email">Please enter a valid e-mail id</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-12 ">
+        <ng-template #content let-modal>
+
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Organisation Added</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Please confirm, if you want to add the Organisation
+            <div class="col-sm-12">
+                <alert></alert>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" *ngIf="transferSuccess == false" class="btn btn-outline-dark"
+                (click)="transferComplaint()">{{'DETAIL_COMPLAINANT.TRANSFER_COMPLAINT' | translate}}</button> &nbsp; &nbsp; -->
+
+            <!-- <button type="button" *ngIf="transferSuccess == true" class="btn btn-outline-dark"
+                (click)="confirmationClose()">{{'DETAIL_COMPLAINANT.OK' | translate}}</button> -->
+
+            <button type="button" class="btn btn-outline-dark" (click)="saveOrgDetails()">YES</button>
+            &nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">NO</button>
+
+
+          </div>
+
+        </ng-template>
+        <div class="submit">
+
+          <button type="submit" class="btn btn-primary round" (click)="open(content)">Submit</button>
+        </div><br><br>
+      </div>
+
+    </form>
+  </div>
+  <!-- <div class="col-sm-2 col-md-2 col-lg-2 part1">
+    <div class=" mandatory text-right">
+      * {{'COMMON.MANDATORY' | translate}}
+    </div>
+  </div> -->
+</div>

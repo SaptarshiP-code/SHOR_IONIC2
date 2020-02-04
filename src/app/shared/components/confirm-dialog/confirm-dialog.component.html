@@ -1,0 +1,105 @@
+<div *ngIf="message" class="modal" tabindex="-1" role="dialog" style="display:block!important">  
+    <div class="modal-dialog custom-alert" role="document">  
+        <div class="modal-content" *ngIf = "message.text == 'register'" >  
+           
+            <div *ngIf="message?.type == 'confirm'" class="modal-body">  
+                <div class="row">  
+                    <div class="col-md-12">  
+                        <!-- <p class="text-center confirm-message">{{message.text}}</p>   -->
+                        <p class="text-right"> <a (click)="message.closeModal()"  href="javascript:void();" >X</a></p>
+                    </div>  
+                </div>  
+                <div class="row">  
+                    <div class="col-md-12">  
+                       
+                            <p class="confirm-button">  
+                            <a (click)="message.noFn()">  
+                                <button class="btn btn-pink">{{'USER_TYPE.COMPLAINANT' | translate}}</button>  
+                            </a>  
+                        </p>  
+                        <p class="confirm-button">  
+                                <a (click)="message.siFn()">  
+                                    <button class="btn btn-yes">{{'USER_TYPE.EMPLOYER' | translate}}</button>  
+                                </a></p> 
+                        <p class="confirm-button">  
+                                <a (click)="message.thFn()">  
+                                    <button class="btn btn-no">{{'USER_TYPE.OTHER_USERS' | translate}}</button>  
+                                </a>  
+                            </p>
+                    </div>  
+                </div>  
+                <div class="row">  
+                    <div class="col-md-12">  
+                        <!-- <p class="text-center confirm-message">{{message.text}}</p>   -->
+                        <p class="text-right"></p>
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+        <div class="modal-content" *ngIf = "message.text == 'login'" >  
+           
+                <div *ngIf="message?.type == 'confirm'" class="modal-body">  
+                    <div class="row">  
+                        <div class="col-md-12">  
+                                <p class="text-right"> <a (click)="message.closeModal()" href="javascript:void()">X</a></p>
+                            <!-- <p class="text-center confirm-message">{{message.text}}</p>   -->
+                        </div>  
+                    </div>  
+                    <div class="row">  
+                        <div class="col-md-12">  
+                                <p class="confirm-button">  
+                                        <a (click)="message.noFn()">  
+                                            <button class="btn btn-yes width-235">{{'USER_TYPE.COMPLAINANT' | translate}} / {{'USER_TYPE.OTHER_USERS' | translate}}</button>  
+                                        </a>  
+                                    </p>
+                            <p class="confirm-button">  
+                                <a (click)="message.siFn()">  
+                                    <button class="btn btn-no width-235">{{'USER_TYPE.EMPLOYER' | translate}}</button>  
+                                </a></p> 
+                               
+                            
+                        </div>  
+                    </div>  
+                </div>  
+                <!-- <div class="row">  
+                        <div class="col-md-12">  
+                       <p class="text-center confirm-message">{{message.text}}</p>  
+                            <p class="text-right"></p>
+                        </div>  
+                    </div>   -->
+            </div>  
+
+            <div class="modal-content" *ngIf = "message.text == 'confirm'" >  
+           
+                    <div *ngIf="message?.type == 'confirm'" class="modal-body">  
+                        <div class="row">  
+                            <div class="col-md-12">  
+                                    <p class="text-right"> <a (click)="message.closeModal()" href="javascript:void()">X</a></p>
+                                <!-- <p class="text-center confirm-message">{{message.text}}</p>   -->
+                            </div>  
+                        </div>  
+                        <div class="row">  
+                            <div class="col-md-12">  
+                                <p class="confirm-button">  
+                                    <a (click)="message.siFn()">  
+                                        <button class="btn btn-yes">{{'COMMON.YES' | translate}}</button>  
+                                    </a></p> 
+                                   
+                                <p class="confirm-button">  
+                                        <a (click)="message.noFn()">  
+                                            <button class="btn btn-no">{{'COMMON.NO' | translate}}</button>  
+                                        </a>  
+                                    </p>
+                            </div>  
+                        </div>  
+                    </div>  
+                    <div class="row">  
+                            <div class="col-md-12">  
+                                <!-- <p class="text-center confirm-message">{{message.text}}</p>   -->
+                                <p class="text-right"></p>
+                            </div>  
+                        </div>  
+                </div>  
+
+    </div>  
+</div>  

@@ -1,0 +1,28 @@
+@import '../../../scss/variable.scss';
+@import '../../../scss/common.scss';
+
+.button {
+  
+  .icon {
+    height: 30px;
+    width: 30px;
+    margin-left: 10px;
+  }
+  .margin-left {
+    margin-left: 8%;
+  }
+  button{
+    width: 100%;
+    // height: 40px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-size: cover;
+    text-align: center;
+    max-width: 270px;
+
+  }
+  .text{
+    margin-top: 3px !important;
+  }
+  
+}

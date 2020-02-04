@@ -1,0 +1,86 @@
+@import '../../../../scss/common.scss';
+.row{
+  margin:0;
+}
+.alert.alert-danger {
+  text-align: center;
+}
+.background {
+  background-color: #fffde7;
+  margin-top: 2px;
+  .form-header{
+    background-color: #ebf0ff;
+    background-size: cover;
+    text-align: center;
+    color: #424242;
+    padding: 5px 0;
+    font-size: 20px;
+    text-decoration: none solid rgb(66, 66, 66);
+    height:40px;
+  }
+.form {
+  padding: $gap;
+  min-height: 430px;
+  .form-control{
+    font-size: 12px;
+  }
+  label{
+      height: 17px;
+      font-size: 12px;
+      color: #424242;
+      text-decoration: none solid rgb(66, 66, 66);
+      margin-bottom: 8px;
+  }
+  button{
+      width: 210px;
+      height: 40px;
+      border-radius: 5px;
+      background-color: #891199;
+      background-size: cover;
+  }
+  .register-link{
+
+
+      font-size: 12px;
+      color: #474747;
+      font-weight: 600;
+      text-decoration: none solid rgb(71, 71, 71);
+      text-align: center; 
+      margin-top: 2%;
+
+
+  }
+  .submit {
+    margin-top: 4%;
+    text-align: center; 
+  }
+
+}
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+}
+.ngx-show-hide-password .btn-primary,
+show-hide-password .btn-primary {
+  height: 100%!important;
+  font-size: 10px!important;
+}
+.input-group>.input-group-append>.btn {
+  height: 100%;
+  font-size: 10px!important;
+  z-index: 0!important;
+}
+.input-group-append.ngx-show-hide-password {
+  z-index: 0!important;
+}
+.input-group-sm>.custom-select, .input-group-sm>.form-control:not(textarea) {
+  height: auto!important;
+}
+
+.form-group {
+  margin-bottom: 0.5rem;
+}
+.invalid-feedback.is-invalid {
+  display: block;
+}

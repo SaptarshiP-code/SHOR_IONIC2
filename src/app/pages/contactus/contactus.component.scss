@@ -1,0 +1,68 @@
+@import '../../scss/common.scss';
+
+.form-header {
+    background-color: #ebf0ff;
+    text-align: center;
+    color: #424242;
+    padding: 5px 3%;
+    font-size: 20px;
+    -webkit-text-decoration: none solid #424242;
+    text-decoration: none solid #424242;
+}
+.contact{
+    text-align: center;
+    margin: 20px;
+}
+li {
+    list-style: none;
+
+}
+
+.contact-text{
+    font-size: 16px;
+    color: #424242;
+    padding-top:20px;
+    font-weight:600;
+
+}
+.email {
+    margin-top: 2%;
+    font-size: 16px;
+    color: #424242;
+    font-weight: 600;
+}
+.para{
+    font-size:22px;
+    font-weight:600;
+}
+.para1{
+    font-size:18px;
+    font-weight:600;
+}
+.row{
+    margin-right:0!important;
+}
+.guide-title {
+    color: #891199;
+    font-size: 16px;
+    font-weight: 600;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.guide-pretext {
+    color: #424242;
+    font-size: 12px;
+}
+
+.guide-link {
+    color: #2196f3;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px;
+    text-decoration: underline;
+}
+.play-store1 {
+    float: right;
+    display: block;
+    clear: right;
+}

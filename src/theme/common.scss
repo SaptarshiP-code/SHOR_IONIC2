@@ -1,0 +1,35 @@
+@import '../scss/variable.scss';
+* {
+  font-family: 'Open Sans' /* Replace with your custom font */ !important; 
+  /* Add !important to overwrite all elements */
+}
+.round {
+  border-radius: $gap/2 + $gap;
+  background-color: #3949ab;
+  background-size: cover;
+  }
+  .form-header{
+    background-color: #ebf0ff;
+    text-align: center;
+    color: #424242;
+    padding: 5px 3%;
+    font-size: 20px;
+    text-decoration: none solid rgb(66, 66, 66);
+    // height:40px;
+  }
+
+  .page-item.active .page-link {
+    z-index: 0;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.ngx-datepicker-calendar-container.ngx-datepicker-position-bottom-left {
+  z-index: 9!important;
+}
+button,.page-item.active {
+  z-index:0!important;
+}
+.footer{
+  z-index: 99999;
+}

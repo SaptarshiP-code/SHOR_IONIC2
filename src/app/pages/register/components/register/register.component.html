@@ -1,0 +1,198 @@
+<div class="row ">
+  <div class="col-sm-12 row form-header" *ngIf="registrationStep === 0">
+    <div class="col-sm-4  ">
+      <span class="step">{{'REGISTRATION.STEP_1_2' | translate}} </span>
+      <span class="step-desc">{{'REGISTRATION.MOBILE_NUMBER_PLACEHOLDER' | translate}}</span>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{'REGISTRATION.REGISTRATION' | translate}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+  <div class="col-sm-12 row form-header" *ngIf="registrationStep === 1">
+    <div class="col-sm-4  ">
+      <span class="step">{{'REGISTRATION.STEP_2_2' | translate}} </span>
+      <span class="step-desc">{{'REGISTRATION.STEP_2_DESC' | translate}} </span>
+    </div>
+    <div class="col-sm-4 m-auto">
+      {{'REGISTRATION.REGISTRATION' | translate}}
+    </div>
+    <div class="col-sm-4 m-auto">
+      &nbsp;
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <alert></alert>
+  </div>
+ 
+  <div class="col-sm-12 col-md-4 col-lg-4 m-auto form">
+    <div class="alert" *ngIf="notfication">{{notfication}}</div>
+    <form [formGroup]="otpForm" *ngIf="registrationStep === 0">
+      <div class="mobotpform">
+        <div class="form-group">
+          <label for="mobileNumber">{{'REGISTRATION.MOBILE_NUMBER' | translate}}*</label>
+          <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber" pattern="[0-9]*" maxlength="10" minlength="10"
+            placeholder="{{'REGISTRATION.MOBILE_NUMBER_PLACEHOLDER' | translate}}"
+            [ngClass]="{ 'is-invalid': otpSubmitted && otpf.mobileNumber.errors }">
+          <div *ngIf="otpSubmitted && otpf.mobileNumber.errors" class="invalid-feedback">
+            <div *ngIf="otpf.mobileNumber.errors.required">{{'REGISTRATION.MOBILE_NUMBER_REQUIRED' | translate}} </div>
+          </div>
+          <div class="text-right"> 
+            <!-- {{mobileOtp}}
+             -->
+             &nbsp;
+             
+             <button type="button"  class="getOTPlink"
+              (click)="getOTP()">{{'REGISTRATION.GET_OTP' | translate}}</button>
+          </div>
+
+
+          <div class="form-group">
+            <label for="mobileOtp">{{'REGISTRATION.MOBILE_OTP' | translate}}*</label>
+            <input type="number" formControlName="otp" class="form-control" id="otp"
+              placeholder="{{'REGISTRATION.MOBILE_OTP_PLACEHOLDER' | translate}}"
+              [ngClass]="{ 'is-invalid': otpSubmitted && otpf.otp.errors }">
+            <div *ngIf="otpSubmitted && otpf.otp.errors" class="invalid-feedback">
+              <div *ngIf="otpf.otp.errors.required">{{'REGISTRATION.OTP_REQUIRED' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary round"
+          (click)="getOTPVerify()">{{'REGISTRATION.NEXT' | translate}}</button>
+      </div>
+    </form>
+    <!-- <form [formGroup] = "emailOtpForm" >
+        <div class="emailOtpForm" *ngIf = "registrationStep ===1">
+          <div class="form-group">
+              <div class="form-group">
+                  <label for="Email">{{'REGISTRATION.EMAIL' | translate}}</label>
+                  <input type="email" formControlName="email" class="form-control" id="Email" placeholder="{{'REGISTRATION.EMAIL_PLACEHOLDER' | translate}}">
+                  <button class="link" (click)="getOTP()">Get OTP</button>
+                </div>
+                
+  
+                <div class="form-group">
+                    <label for="emailOtp">{{'REGISTRATION.MOBILE_OTP' | translate}}</label>
+                    <input type="text" formControlName="otp" value={{emailOtp}} class="form-control" id="otp"
+                      placeholder="{{'REGISTRATION.MOBILE_OTP_PLACEHOLDER' | translate}}">
+                  </div>
+            </div>
+            <button  class="btn btn-primary round" (click)="getOTPVerify()">Get OTP</button>
+          </div>
+      </form>-->
+    <form [formGroup]="registerForm" *ngIf="registrationStep >0">
+      <!--<div class="form-group">
+        <div class="form-group">
+          <label for="usertype"> Usertype</label>
+          <select class="form-control" formControlName="usertype" id="usertype" placeholder="Enter User type">
+            <option>Complainant</option>
+            <option>LCC</option>
+            <option>ICC</option>
+            <option>DO</option>
+          </select>
+        </div>-->
+
+      <div class="form-group">
+
+        <input type="hidden" formControlName="mobileNumber" class="form-control" id="mobileNumber"
+          value="{{mobileNumber}}">
+      </div>
+      <div class="form-group">
+        <label for="name">{{'REGISTRATION.NAME' | translate}}*</label>
+        <input type="text" [readonly]="!isComplainant" formControlName="name" class="form-control" id="name"
+          placeholder="{{'REGISTRATION.NAME_PLACEHOLDER' | translate}}" value="{{name}}"
+          [ngClass]="{ 'is-invalid': emailVeficationSubmitted && regf.name.errors }">
+        <div *ngIf="emailVeficationSubmitted && regf.name.errors" class="invalid-feedback">
+          <div *ngIf="regf.name.errors.required">
+            {{'REGISTRATION.NAME' | translate}}{{'REGISTRATION.IS_REQUIRED' | translate}} </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="emailId">{{'REGISTRATION.EMAIL' | translate}}</label>
+        <input type="email" (change)="emailOtpOptional()" [readonly]="!isComplainant" value="{{emailId}}" formControlName="emailId"
+          class="form-control" id="emailId" placeholder="{{'REGISTRATION.EMAIL_PLACEHOLDER' | translate}}"
+          [ngClass]="{ 'is-invalid': emailVeficationSubmitted && regf.emailId.errors }">
+        <div class="text-right">
+          <!-- {{emailOtp}} &nbsp; -->
+          &nbsp;
+          <button  type="button" class="getOTPlink"
+            (click)="getEmailOTP()">{{'REGISTRATION.SEND_EMAIL_OTP' | translate}}</button> </div>
+        <div *ngIf="emailVeficationSubmitted && regf.emailId.errors" class="invalid-feedback">
+          <div *ngIf="regf.emailId.errors.required">
+            {{'REGISTRATION.EMAIL' | translate}}{{'REGISTRATION.IS_REQUIRED' | translate}} </div>
+        
+        <div *ngIf="regf.emailId.errors.email">
+            {{'COMMON.VALID_EMAIL' | translate}} </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="emailOtp">{{'REGISTRATION.EMAIL_OTP' | translate}}</label>
+        
+        <input type="number" formControlName="otp" [readonly]="registerForm.value['emailId']==''" class="form-control" id="emailOtp"
+          placeholder="{{'REGISTRATION.EMAIL_OTP_PLACEHOLDER' | translate}}"
+          [ngClass]="{ 'is-invalid': emailVeficationSubmitted && regf.otp.errors }">
+        <div *ngIf="emailVeficationSubmitted && regf.otp.errors" class="invalid-feedback">
+          <div *ngIf="regf.otp.errors.required">
+            {{'REGISTRATION.EMAIL_OTP' | translate}}{{'REGISTRATION.IS_REQUIRED' | translate}} </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="form-group">
+        <label for="password">{{'REGISTRATION.PASSWORD' | translate}}* </label> &nbsp;
+        <!-- <img src="./../../../../../assets/icons/InfoIcon.svg" tooltipClass="password-tooltip" ngbTooltip="{{'FORGOT_PASSWORD.PASSWORD_POLICY' | translate}}"> -->
+        <button class="getOTPlink" tooltipClass="password-tooltip" ngbTooltip="{{'FORGOT_PASSWORD.PASSWORD_POLICY' | translate}}">
+            {{'COMMON.NEED_HELP_TEXT' | translate}}
+        </button>
+        <show-hide-password size="sm" btnStyle="none" [btnOutline]="false">
+          <input type="password" formControlName="password" class="form-control" id="password"
+            placeholder="{{'REGISTRATION.PASSWORD_PLACEHOLDER' | translate}}"
+            [ngClass]="{ 'is-invalid': emailVeficationSubmitted && regf.password.errors }">
+
+
+        </show-hide-password>
+        <div *ngIf="emailVeficationSubmitted && regf.password.errors" class="text-danger small">
+          <div *ngIf="regf.password.errors.required">
+            {{'REGISTRATION.PASSWORD' | translate}} </div>
+          <div *ngIf="regf.password.errors.pattern">
+            {{'REGISTRATION.PASSWORD_POLICY' | translate}}</div>
+        </div>
+
+        <!-- <div *ngIf="emailVeficationSubmitted && regf.password.errors" class="invalid-feedback">rrrrrr -->
+
+
+
+      </div>
+      <div class="form-group">
+        <label for="cpassword">{{'REGISTRATION.CONFIRM_PASSWORD' | translate}}*</label>
+        <show-hide-password size="sm" btnStyle="none" [btnOutline]="false">
+          <input type="password" formControlName="cpassword" class="form-control" id="cpassword"
+            placeholder="{{'REGISTRATION.CONFIRM_PASSWORD_PLACEHOLDER' | translate}}"
+            [ngClass]="{ 'is-invalid': emailVeficationSubmitted && regf.cpassword.errors }">
+
+        </show-hide-password>
+        <div *ngIf="emailVeficationSubmitted && regf.cpassword.errors" class="text-danger small">
+          <div *ngIf="regf.cpassword.errors.required">
+            {{'REGISTRATION.CONFIRM_PASSWORD' | translate}}{{'REGISTRATION.IS_REQUIRED' | translate}}</div>
+        </div>
+
+      </div>
+
+      <div class="submit">
+        <div *ngIf="isComplainant"> <input type="hidden" id="isComplainant" formControlName="isComplainant"
+            value="true" /> </div>
+            <button type="button" class="btn btn-primary round"
+          (click)="backToStep(0)">{{'BUTTON.BACK' | translate}}</button> &nbsp; &nbsp;
+        <button type="submit" class="btn btn-primary round"
+          (click)="verifyEmailOTP()">{{'REGISTRATION.SUBMIT' | translate}}</button>
+      </div>
+    </form>
+  </div>
+  <div class=" mandatory text-right">
+      * {{'COMMON.MANDATORY' | translate}} 
+    </div>
+</div>

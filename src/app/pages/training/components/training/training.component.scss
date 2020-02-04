@@ -1,0 +1,120 @@
+@import '../../../../scss/common.scss';
+
+.row{
+    margin-left: 0;
+    margin-right: 0;
+  }
+//   .form-header{
+//     background-color: #ebf0ff;
+//     text-align: center;
+//     color: #424242;
+//     padding: 5px 3%;
+//     font-size: 20px;
+//     text-decoration: none solid rgb(66, 66, 66);
+//     height:40px;
+//   }
+
+  .title{
+    text-align: center;
+    }
+    
+    .tab-btn{
+        width: 300px;
+        height: 40px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: #cccccc;
+        font-size: 16px;
+        color: #424242;
+        text-decoration: none solid rgb(66, 66, 66);
+        text-align: center;
+        font-weight: 600;
+       
+    }
+    .tab-btn.active {
+        background: #891199;
+        color: #ffffff;
+    }
+    .nav-tabs{
+        border-bottom: 5px solid #891199;
+        margin-top: 20px;
+        margin-bottom: -20px;
+    }
+    .utraining{
+        margin-top:1%;
+    }
+    table{
+
+        border: 1px solid #cccccc;
+        background-color: #ffffff;
+        margin-top:20px;
+    }
+    .ttitle{
+        
+    padding-top: 20px;
+    font-size: 16px;
+    color: #424242;
+    font-weight: 600;
+    text-decoration: none solid rgb(66, 66, 66);
+    }
+    .tloc {
+        padding-top: 17px;
+        padding-bottom: 15px;
+        font-size: 14px;
+        color: #424242;
+        text-decoration: none solid rgb(66, 66, 66);
+    }
+    .ttime {
+        padding-left: 37px;
+        padding-top: 15px;
+        font-size: 14px;
+        color: #424242;
+        font-weight: 600;
+        text-decoration: none solid rgb(66, 66, 66);
+    }
+    .tdate {
+        padding-top: 15px;
+        width: 102px;
+        font-size: 12px;
+        color: #424242;
+        font-weight: 600;
+        text-decoration: none solid rgb(66, 66, 66);
+    }
+    p.trbody {
+       
+    font-size: 14px;
+    color: #424242;
+    text-decoration: none solid rgb(66, 66, 66);
+    }
+    .trainingimg {
+       
+        font-size: 12px;
+        color: #891199;
+        font-weight: 600;
+        font-style: italic;
+        text-decoration: none solid rgb(137, 17, 153);
+        /* float: right; */
+        text-align: right;
+    }
+
+    .innote {
+        padding: 6%;
+        text-align: justify;
+        color: #424242;
+        font-size: 14px;
+    }
+    .taimg {
+        /* margin-top: -2px; */
+        padding: 1%;
+    }
+    .m-bottom {
+        margin-bottom: 3% !important;
+    }
+    div{
+        white-space: pre-wrap;
+    }
+    .tdate span ,
+    .ttime span ,
+    .tloc span{
+        padding: 0 5px;
+    }

@@ -1,0 +1,165 @@
+<div class="row ">
+  <div class="col-sm-12 form-header title">
+
+    {{'LIST_COMPLAINT.COMPLAINT' | translate}}
+  </div>
+</div>
+<div class="col-sm-8 m-auto">
+  <ul class="nav nav-tabs" *ngIf="userCategory == 'icc' || userCategory == 'lcc' || userCategory == 'complainant' ">
+    <li class="active"><a href="javascript:void()" (click)="getComplaint(false)" class="btn tab-btn"
+        [ngClass]="{'active': disposedComplaints==false}">{{'LIST_COMPLAINT.IN_PROCESS' | translate}}</a></li>
+    <li class="active"><a href="javascript:void()" (click)="getComplaint(true)" class="btn tab-btn"
+        [ngClass]="{'active': disposedComplaints==true}">{{'LIST_COMPLAINT.DISPOSED' | translate}}</a></li>
+  </ul>
+  <ul class="nav nav-tabs" *ngIf="userCategory == 'do' || userCategory == 'employer'">
+    <li class="active"><a href="javascript:void()" (click)="getComplaint(false)" class="btn tab-btn"
+        [ngClass]="{'active': disposedComplaints==false}">{{'LIST_COMPLAINT.IN_PROCESS' | translate}}</a></li>
+    <li class="active"><a href="javascript:void()" (click)="getComplaint(true)" class="btn tab-btn"
+        [ngClass]="{'active': disposedComplaints==true}">{{'LIST_COMPLAINT.SUBMITTED' | translate}}</a></li>
+  </ul>
+  <!-- <button (click) = "getComplaint(false)" class="btn tab-btn" >In Process</button> &nbsp;
+   <button (click) = "getComplaint(true)" class='btn' >Disposed</button> -->
+  <!-- <input type="text" [(ngModel)]="status" placeholder="Serach any fields"/> -->
+  <div class="disposedData" *ngIf="dataSuccess && disposedComplaints === true">
+    <table class="table table-striped table-bordered" [mfData]="disposedData.slice().reverse()" #mf="mfDataTable" [mfRowsOnPage]="10">
+      <thead>
+        <tr>
+          <th style="width: 55%">
+            <mfDefaultSorter by="id">{{'LIST_COMPLAINT.COMPLAINT_ID' | translate}} </mfDefaultSorter>
+          </th>
+
+          <th style="width: 25%" class="td-data">
+            <mfDefaultSorter by="createdAt">
+              {{'LIST_COMPLAINT.DATE' | translate}}
+            </mfDefaultSorter>
+          </th>
+
+          <th style="width: 20%" class="td-data">
+
+            {{'LIST_COMPLAINT.STATUS' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngIf="disposedData?.length== 0">
+              <td colspan="4" class="text-center"> {{'COMMON.NO_COMPLAINT_FOUND' | translate}}</td>
+            </tr>
+        <tr *ngFor="let complaints of mf.data" class="link">
+          <!-- <tr *ngFor="let complaints of mf.data | status:'disposed';"> -->
+          <td><a [routerLink]="['/complaints/detail',complaints.id]">{{ complaints.id }}</a></td>
+          <td class="td-data">{{ complaints.createdAt |date: 'MM/dd/yyyy h:mm a' }}</td>
+          <td class="td-data">
+            
+            <!-- {{ complaints.status }} -->
+            <div *ngIf="complaints.status=='In-Progress'; else diposeddata">
+                {{'LIST_COMPLAINT.IN_PROCESS' | translate}}
+              
+            </div>
+            <ng-template #diposeddata>
+                {{'LIST_COMPLAINT.DISPOSED' | translate}}
+            </ng-template>
+          </td>
+
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+  <div class="in-processData" *ngIf="dataSuccess && disposedComplaints === false">
+    <table class="table table-striped table-bordered" [mfData]="inProcessData.slice().reverse()" #mf="mfDataTable" [mfRowsOnPage]="10">
+      <thead>
+        <tr>
+          <th style="width: 40%">
+            <mfDefaultSorter by="createdAt">{{'LIST_COMPLAINT.COMPLAINT_ID' | translate}}</mfDefaultSorter>
+          </th>
+
+          <th style="width: 20%" class="td-data">
+            <mfDefaultSorter by="createdAt">{{'LIST_COMPLAINT.DATE' | translate}}</mfDefaultSorter>
+          </th>
+          <th *ngIf="userCategory == 'icc' || userCategory == 'lcc'" style="width: 15%">
+            {{'LIST_COMPLAINT.DAYS_LEFT' | translate}}</th>
+            <th *ngIf="userCategory == 'lcc'" style="width: 15%">
+                {{'LIST_COMPLAINT.CATEGORY' | translate}}</th>
+          <th *ngIf="userCategory == 'lcc'" style="width: 15%">
+            {{'LIST_COMPLAINT.ICC_STATUS' | translate}}</th>
+          <th style="width: 15%" class="td-data"> {{'LIST_COMPLAINT.STATUS' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="inProcessData?.length== 0">
+          <td colspan="4" class="text-center">  {{'COMMON.NO_COMPLAINT_FOUND' | translate}}</td>
+        </tr>
+        <tr *ngFor="let complaints of mf.data" class="link">
+          <!-- <tr *ngFor="let complaints of mf.data | status:'disposed';"> -->
+          <td><a [routerLink]="['/complaints/detail',complaints.id]">{{ complaints.id }}</a></td>
+          <td class="td-data">{{ complaints.createdAt |date: 'MM/dd/yyyy h:mm a' }}</td>
+          
+          <td *ngIf="userCategory == 'icc'  || userCategory == 'lcc'">
+
+            <div *ngIf="getDays(complaints.createdAt) != 'Overdue' else overDue"> {{ getDays(complaints.createdAt) }}
+              {{'LIST_COMPLAINT.DAYS_LEFT' | translate}} </div>
+
+            <ng-template #overDue>
+              {{'LIST_COMPLAINT.OVERDUE' | translate}}
+            </ng-template>
+          </td>
+          <td  *ngIf="(userCategory == 'lcc') ">
+            <div *ngIf = "complaints.workPlace && complaints.workPlace.organisation" >
+              {{complaints.workPlace.organisation.category}}
+            </div>
+            </td>
+            <td  *ngIf="(userCategory == 'lcc') ">
+            <div *ngIf = "complaints.workPlace && complaints.workPlace.organisation && complaints.workPlace.organisation.unit ; else notapplicable">
+              <div *ngIf = " complaints.workPlace.organisation.unit.iccStatus; else notconsttuted ">
+                Constituted
+                            </div>
+                            <ng-template #notconsttuted>Not Constituted</ng-template>          
+            
+           </div>
+           <ng-template #notapplicable>Not Applicable</ng-template>
+           </td>
+          <td class="td-data">
+            <div *ngIf="complaints.status=='In-Progress'; else diposeddata">
+                {{'LIST_COMPLAINT.IN_PROCESS' | translate}}
+              
+            </div>
+            <ng-template #diposeddata>
+                {{'LIST_COMPLAINT.DISPOSED' | translate}}
+            </ng-template>
+            <!-- <div *ngIf="complaints.status=='In-Progress'"></div> -->
+            <!-- {{ complaints.status }} -->
+          </td>
+
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr *ngIf="(userCategory == 'lcc') ">
+          <td colspan="6">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+        <tr *ngIf="(userCategory != 'lcc') ">
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 50]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+      </tfoot>
+
+    </table>
+  </div>
+
+  <br />
+  <br />
+  <br />
+
+</div>
+<div class="md-col-12 ml-auto" *ngIf="userCategory == 'complainant'">
+  <a [routerLink]="['/complaints/add']" class="btn add-button">
+    {{'LIST_COMPLAINT.FILE_COMPLAINT' | translate}}</a>
+</div>
